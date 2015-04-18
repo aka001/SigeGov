@@ -8,7 +8,7 @@ import datetime
 from datetime import datetime as dt
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
-from blood.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User
+from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User
 from django.contrib.auth.decorators import login_required
 
 emailil="bloodconnect14@gmail.com"

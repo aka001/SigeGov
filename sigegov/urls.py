@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from blood import views
+from sigegov import views
 
 
 urlpatterns = [

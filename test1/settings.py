@@ -36,7 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blood',
+    'sigegov',
     'registration',
     'social_auth',
     'djangoChat',
@@ -86,14 +86,14 @@ GOOGLE_OAUTH2_CLIENT_SECRET = 'nUe8d9t8QhahqHup9Wb-tdzL'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'bloodconnect14@gmail.com'
-EMAIL_HOST_PASSWORD = 'bloodconnectiiit123'
-DEFAULT_FROM_EMAIL = 'BloodConnect'
+EMAIL_HOST_USER = 'sigegov.gov@gmail.com'
+EMAIL_HOST_PASSWORD = 'sigegov123'
+DEFAULT_FROM_EMAIL = 'SigeGov'
 EMAIL_PORT = 587
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-LOGIN_REDIRECT_URL = '/blood/'
+LOGIN_REDIRECT_URL = '/sigegov/'
 
 #SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/blood/'
 
