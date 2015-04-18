@@ -14,6 +14,6 @@ The commands to be used are:
 
 Go to synaptics manager and install:   
 1.  python-django-registration module.  
-2.  python-django-social-auth  
+2.  python-django-social-auth module.  
 
 That's all :)  
