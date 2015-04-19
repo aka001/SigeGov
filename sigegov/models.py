@@ -9,7 +9,7 @@ class MySpecialUser(models.Model):
 
 
 
-class Recepient(models.Model):
+'''class Recepient(models.Model):
 	user = models.ManyToManyField(User)
    	name=models.CharField(max_length=200)
 	address=models.CharField(max_length=200)
@@ -83,4 +83,4 @@ class Choice(models.Model):
 	question = models.ManyToManyField(Question)
     	#question = models.ForeignKey(Question)
     	choice_text = models.CharField(max_length=200)
-    	votes = models.IntegerField(default=0)
+    	votes = models.IntegerField(default=0)'''
