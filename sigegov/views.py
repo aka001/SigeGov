@@ -8,8 +8,9 @@ import datetime
 from datetime import datetime as dt
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
-from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User
+from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications
 from django.contrib.auth.decorators import login_required
+import csv
 
 emailil="bloodconnect14@gmail.com"
 
@@ -18,6 +19,69 @@ def view_request(request,requestID):
 	request_list=Recepient.objects.get(id=requestID)
 	context={'requestit':request_list}
 	return render(request,'blood/view_request.html',context)
+
+def enter_data(request):
+	"""Used for entering the data into the Publications database."""
+	with open("text.csv", 'rU') as csvfile:
+	   spamreader = csv.reader(csvfile, delimiter=';')	
+	   lines = []
+     	   for line in spamreader:
+         	#line =  line.split(';') 
+		#lines.append(line)
+		product = Publications()
+		product.document_id = line[0]
+		product.project_title = line[1]
+		product.department_name = line[2]
+		product.name_1 = line[3]
+		product.designation_1 = line[4]
+		product.email_1 = line[5]
+		product.address_1 = line[6]
+		product.phone_1 = line[7]
+		product.fax_1 = line[8]
+		product.mobile_1 = line[9]
+		product.name_2 = line[10]
+		product.designation_2 = line[11]
+		product.email_2 = line[12]
+		product.address_2 = line[13]
+		product.phone_2 = line[14]
+		product.fax_2 = line[15]
+		product.mobile_2 = line[16]
+		product.category = line[17]
+		product.nature = line[18]
+		product.description = line[19]
+		product.date = line[20]
+		product.url = line[21]
+		product.business_model = line[22]
+		product.no_process = line[23]
+		product.beneficiary_1 = line[24]
+		product.beneficiary_2 = line[25]
+		product.beneficiary_3 = line[26]
+		product.transaction = line[27]
+		product.benefit_1 = line[28]
+		product.benefit_2 = line[29]
+		product.benefit_3 = line[30]
+		product.process_1 = line[31]
+		product.process_2 = line[32]
+		product.process_3 = line[33]
+		product.database = line[34]
+		product.operating = line[35]
+		product.web_server = line[36]
+		product.prime_agency = line[37]
+		product.network_arrangement = line[38]
+		product.datacenter = line[39]
+		product.csc = line[40]
+		product.formal_document = line[41]
+		product.implementation = line[42]
+		product.no_training = line[43]
+		product.sector = line[44]
+		product.sub_sector = line[45]
+		product.state = line[46]
+		product.save()  
+	context = {'value':lines}
+	return render(request,'sigegov/enter.html',context)
+	#html = "<html><body>Data Successfully entered.</body>"+spamreader+"</html>"
+	#return HttpResponse(html)
+
 @login_required
 def view_request_thanks(request,requestID):
 	request_list=Recepient.objects.get(id=requestID)

@@ -5,7 +5,8 @@ from sigegov import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     # ex: /polls/5/
-	
+    
+    url(r'^enter_data/$',views.enter_data,name='enter_dat),
     url(r'^view_request_thanks/(?P<requestID>\S+)/$',views.view_request_thanks,name='view_request_thanks'),
     url(r'^view_request/(?P<requestID>\S+)/$',views.view_request,name='view_request'),
     url(r'^requestblood_form/$',views.requestblood_form,name='requestblood_form'),
