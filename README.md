@@ -16,4 +16,10 @@ Go to synaptics manager and install:
 1.  python-django-registration module.  
 2.  python-django-social-auth module.  
 
+Connect to Mysql database:
+1. Create a mysql db egov [ create database egov ] 
+2. Change the password in test1/settings.py with your mysql password [mysql -u root -p] 
+3. Run python manage.py syncdb [Only once to create the tables in db]
+4. Done.
+
 That's all :)  
