@@ -1,5 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
+
+class MySpecialUser(models.Model):
+	status=models.OneToOneField(User)
+#url = models.URLField()
+#home_address = models.TextField()
+
 
 
 class Recepient(models.Model):
@@ -77,4 +84,3 @@ class Choice(models.Model):
     	#question = models.ForeignKey(Question)
     	choice_text = models.CharField(max_length=200)
     	votes = models.IntegerField(default=0)
-

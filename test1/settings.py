@@ -62,9 +62,9 @@ WSGI_APPLICATION = 'test1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'egov',
+        'NAME': 'eGov',
 	'USER': 'root',
-	'PASSWORD': 'ashish',
+	'PASSWORD': 'iiit123',
 	'HOST': 'localhost',
 	'PORT': '8000',
     }
