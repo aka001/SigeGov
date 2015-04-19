@@ -12,6 +12,6 @@ urlpatterns = patterns('',
     url(r'^chat/', include('djangoChat.urls')),
     url(r'', include('social_auth.urls')),
     url(r'', include('django.contrib.auth.urls')),
-    #url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
