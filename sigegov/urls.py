@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import patterns, include, url
 from sigegov import views
 
 
@@ -6,8 +6,6 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^authorize_user/(?P<userID>\S+)/$',views.authorize_user,name='authorize_user'),
 
-    # ex: /polls/5/
-    
     url(r'^enter_data/$',views.enter_data,name='enter_data'),
     url(r'^view_request_thanks/(?P<requestID>\S+)/$',views.view_request_thanks,name='view_request_thanks'),
     url(r'^view_request/(?P<requestID>\S+)/$',views.view_request,name='view_request'),
@@ -48,5 +46,7 @@ urlpatterns = [
 	url(r'^about/$',views.about,name='about'),
 	url(r'^home/$',views.home,name='home'),
 	url(r'^todaycamp/$',views.todaycamp,name='todaycamp'),
+	url(r'^publications/$',views.publications,name='publications'),
+    url(r'^search/$',include('haystack.urls')),
 ]
 

@@ -60,6 +60,7 @@ class Publications(models.Model):
 	sector = models.TextField()
 	sub_sector = models.TextField()
 	state = models.TextField()	
+	attachment = models.FileField(upload_to='%Y/%m/%d',blank=True)
 
 class Recepient(models.Model):
 	user = models.ManyToManyField(User)

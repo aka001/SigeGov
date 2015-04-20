@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sigegov',
+    'haystack',
     'registration',
     'social_auth',
     'djangoChat',
@@ -64,7 +65,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'eGov',
 	'USER': 'root',
-	'PASSWORD': 'iiit123',
+	'PASSWORD': 'ashish',
 	'HOST': 'localhost',
 	'PORT': '8000',
     }
@@ -82,6 +83,17 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
+
+WHOOSH_INDEX = os.path.join(BASE_DIR,'whoosh/')
+
+HAYSTACK_CONNECTIONS = {
+	'default' : {
+		'ENGINE':  'haystack.backends.solr_backend.SolrEngine',
+		'URL': 'http://127.0.0.1:8983/solr',
+	},
+}
+
+#HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 GOOGLE_OAUTH2_CLIENT_ID = '58874409849-lae2s3fo9hriq9560tsogv05fjh4kks7.apps.googleusercontent.com'
 
