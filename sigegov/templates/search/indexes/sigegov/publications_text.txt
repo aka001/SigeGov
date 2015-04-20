@@ -1,0 +1,3 @@
+{{ object.project_title}}
+{{ object.document_id}}
+{{ file_data.contents|striptags|safe }}

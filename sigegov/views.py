@@ -9,10 +9,18 @@ from datetime import datetime as dt
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications
+from sigegov.forms import PublicationsSearchForm
 from django.contrib.auth.decorators import login_required
 import csv
 
 emailil="bloodconnect14@gmail.com"
+
+
+def publications(request):
+	form = PublicationsSearchForm(request.GET)
+	publications = form.search()
+	context = {'publications':publications}
+	return render(request,'sigegov/publications.html',context)
 
 @login_required
 def view_request(request,requestID):
