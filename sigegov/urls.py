@@ -4,6 +4,8 @@ from sigegov import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^authorize_user/(?P<userID>\S+)/$',views.authorize_user,name='authorize_user'),
+
     # ex: /polls/5/
     
     url(r'^enter_data/$',views.enter_data,name='enter_data'),

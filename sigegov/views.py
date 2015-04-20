@@ -8,8 +8,9 @@ import datetime
 from datetime import datetime as dt
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
-from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications
+from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications, UserProfile
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 import csv
 
 emailil="bloodconnect14@gmail.com"
@@ -19,6 +20,7 @@ def view_request(request,requestID):
 	request_list=Recepient.objects.get(id=requestID)
 	context={'requestit':request_list}
 	return render(request,'blood/view_request.html',context)
+
 
 def enter_data(request):
 	"""Used for entering the data into the Publications database."""
@@ -98,7 +100,7 @@ def view_request_thanks(request,requestID):
 	return render(request,'blood/view_request_thanks.html',context)
 
 def main(request):
-	return render(request,'blood/main.html')
+	return render(request,'sigegov/index.html')
 @login_required
 def send_email1(request):
 	email=request.user.email
@@ -119,7 +121,7 @@ def index(request):
 	user=request.user.username
 	email = request.user.email
     	context = {'user': user, 'email': email}
-    return render(request, 'blood/index.html', context)
+    return render(request, 'sigegov/index.html', context)
 
 @login_required
 def donor(request):
@@ -144,14 +146,28 @@ def view_story(request,story_id):
 #	order_list = Story.objects.
 @login_required
 def home(request):
-	if request.user is not None:
-		cu=request.user.profile
-		cu.is_chat_user=True
-		cu.last_accessed=utcnow()
-		cu.save()
-		requests = Recepient.objects.all()
-		context = {'requests':requests}
-	return render(request, 'blood/home.html',context);
+	username = request.user.username
+	flag=0
+	context={'flag': flag}
+	if(username=='admin'):
+		flag=1
+		pending_user_list=UserProfile.objects.filter(status=0)
+		accepted_user_list=UserProfile.objects.filter(status=1)
+		context = {'pending_user_list': pending_user_list, 'accepted_user_list': accepted_user_list, 'flag': flag}
+	else:
+		user=UserProfile.objects.get(user_id=request.user.id)
+		if(user.status==0):
+			flag=2
+		else:
+			flag=3
+		context={'flag': flag}
+	return render(request, 'sigegov/index.html',context);
+@login_required
+def authorize_user(request, userID):
+	user=UserProfile.objects.get(user_id=userID)
+	user.status=1
+	user.save()
+	return redirect('home')
 @login_required
 def camp_donate(request,campID):
 	query = Camp.objects.get(id=campID)

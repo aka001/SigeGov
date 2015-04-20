@@ -1,9 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.db.models import signals
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-class MySpecialUser(models.Model):
-	status=models.OneToOneField(User)
+class UserProfile(models.Model):
+	    #required by the auth model
+	user = models.ForeignKey(User, unique=True)
+	status = models.IntegerField(default=0)
 #url = models.URLField()
 #home_address = models.TextField()
 
@@ -131,3 +136,9 @@ class Choice(models.Model):
     	#question = models.ForeignKey(Question)
     	choice_text = models.CharField(max_length=200)
     	votes = models.IntegerField(default=0)
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+	# Creates user profile
+	if created:
+		profile, new = UserProfile.objects.get_or_create(user=instance)

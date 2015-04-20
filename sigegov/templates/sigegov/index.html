@@ -1,0 +1,25 @@
+<h2>Hie</h2>
+{% load i18n %}
+{% block content-body %}
+{% ifequal flag 1 %}
+
+<h2>Pending Users</h2>
+{% for user in pending_user_list.all %}
+	<a href="/sigegov/authorize_user/{{user.user_id}}">{{ user.user_id }}</a>
+{% endfor %}
+<h2>Accepted Users</h2>
+{% for user in accepted_user_list.all %}
+	{{ user.user_id }}<br/>
+{% endfor %}
+
+{% endifequal %}
+
+{% ifequal flag 2 %}
+	<h3>You are not authorized to view this page</h3>
+{% endifequal %}
+
+{% ifequal flag 3 %}
+	<h3> Yo !! </h3>
+{% endifequal %}
+
+{% endblock %}
