@@ -19,9 +19,20 @@ import logging
 emailil="bloodconnect14@gmail.com"
 
 def autocomplete(request):
-	logging.error(request.GET.get('q'))
-	sqs = SearchQuerySet().autocomplete(content_auto=request.GET.get('q','asdfas'))
-	suggestions = [result.project_title for result in sqs]
+	key = request.GET.get('key')
+
+        if key == 'title':
+	        sqs = SearchQuerySet().autocomplete(project_auto=request.GET.get('q','asdfas'))
+	        suggestions = [result.project_title for result in sqs]
+        elif key == 'state':
+	        sqs = SearchQuerySet().autocomplete(state_auto=request.GET.get('q','asdfas'))
+                for result in sqs:
+                        logging.error(dir(result))
+	        suggestions = [(str(result.state)+" "+str(result.project_title)) for result in sqs]
+        elif key == 'category':
+	        sqs = SearchQuerySet().autocomplete(category_auto=request.GET.get('q','asdfas'))
+	        suggestions = [result.category for result in sqs]
+        #logging.error(suggestions)
 	the_data = json.dumps({
 	         'results': suggestions
 	})
