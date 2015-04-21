@@ -28,17 +28,17 @@ def autocomplete(request):
 	return HttpResponse(the_data, content_type='application/json')
 
 def publications(request):
-	#qval = request.GET.get('q')
-	#logging.error(qval)
-	#if qval:
-	#	sqs = SearchQuerySet().autocomplete(content_auto=qval)[:5]
-#else:
-#logging.error(SearchQuerySet().autocomplete(content_auto='gujarat'))
-	#logging.error(suggestions)
 	form = PublicationsSearchForm(request.GET)
 	publications = form.search()
 	context = {'publications':publications}
 	return render(request,'sigegov/publications.html',context)
+
+def view_publication(request, pubID):
+	pub = Publications.objects.get(id=pubID)
+	for field in pub._meta.fields:
+		print field.name
+	context = {'pub': pub}
+	return render(request, 'sigegov/view_publication.html',context)
 
 @login_required
 def view_request(request,requestID):
