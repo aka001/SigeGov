@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models import signals
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from vote.managers import VotableManager
 
 class UserProfile(models.Model):
 	    #required by the auth model
@@ -13,6 +14,7 @@ class UserProfile(models.Model):
 #home_address = models.TextField()
 
 class Publications(models.Model):
+	votes = VotableManager()
 	document_id = models.TextField()
 	project_title = models.TextField()
 	department_name = models.TextField()

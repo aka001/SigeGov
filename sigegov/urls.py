@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^user_details/(?P<userID>\S+)/$',views.user_details,name='user_details'),
     url(r'^not_authorized/$',views.not_authorized,name='not_authorized'),
     url(r'^view_publication/(?P<pubID>\S+)/$',views.view_publication,name='view_publication'),
+    url(r'^process_upvote/(?P<pubID>\S+)/$',views.process_upvote,name='process_upvote'),
+    url(r'^process_downvote/(?P<pubID>\S+)/$',views.process_downvote,name='process_downvote'),
 
     url(r'^enter_data/$',views.enter_data,name='enter_data'),
     url(r'^view_request_thanks/(?P<requestID>\S+)/$',views.view_request_thanks,name='view_request_thanks'),

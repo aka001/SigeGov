@@ -6,6 +6,15 @@
 {{ pub.web_server }} <br/>
 
 {% get_comment_count for pub as comment_count %}
+<p>{{ count }} upvotes </p>
+{% ifequal flag 1 %}
+<p>Upvoted</p>
+<a href="/sigegov/process_downvote/{{pub.id}}">Downvote</a>
+{% endifequal %}
+{% ifequal flag 0 %}
+<a href="/sigegov/process_upvote/{{pub.id}}">Upvote</a>
+{% endifequal %}
+
 <p>{{ comment_count }} comments have been posted.</p>
 
 {% get_comment_list for pub as comment_list %}
