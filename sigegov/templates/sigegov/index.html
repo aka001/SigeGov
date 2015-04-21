@@ -4,12 +4,12 @@
 {% ifequal flag 1 %}
 
 <h2>Pending Users</h2>
-{% for user in pending_user_list.all %}
-	<a href="/sigegov/authorize_user/{{user.user_id}}">{{ user.user_id }}</a>
+{% for user in pending_user_list %}
+	 <a href="/sigegov/user_details/{{user.id}}">{{user}}</a> <a href="/sigegov/authorize_user/{{user.id}}">Change it's status</a> <br/>
 {% endfor %}
 <h2>Accepted Users</h2>
-{% for user in accepted_user_list.all %}
-	{{ user.user_id }}<br/>
+{% for user in accepted_user_list %}
+	 <a href="/sigegov/user_details/{{user.id}}">{{user}}</a> <br/>
 {% endfor %}
 
 {% endifequal %}

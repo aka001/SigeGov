@@ -5,6 +5,8 @@ from sigegov import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^authorize_user/(?P<userID>\S+)/$',views.authorize_user,name='authorize_user'),
+    url(r'^user_details/(?P<userID>\S+)/$',views.user_details,name='user_details'),
+    url(r'^not_authorized/$',views.not_authorized,name='not_authorized'),
 
     url(r'^enter_data/$',views.enter_data,name='enter_data'),
     url(r'^view_request_thanks/(?P<requestID>\S+)/$',views.view_request_thanks,name='view_request_thanks'),

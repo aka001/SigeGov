@@ -16,7 +16,6 @@ import csv
 
 emailil="bloodconnect14@gmail.com"
 
-
 def publications(request):
 	form = PublicationsSearchForm(request.GET)
 	publications = form.search()
@@ -159,23 +158,46 @@ def home(request):
 	context={'flag': flag}
 	if(username=='admin'):
 		flag=1
-		pending_user_list=UserProfile.objects.filter(status=0)
-		accepted_user_list=UserProfile.objects.filter(status=1)
+		pending_user_list1=UserProfile.objects.filter(status=0)
+		accepted_user_list1=UserProfile.objects.filter(status=1)
+		pending_user_list=[]
+		accepted_user_list=[]
+		for user in pending_user_list1:
+			calc=user.user_id
+			userit=User.objects.get(id=calc)
+			pending_user_list.append(userit)
+		for user in accepted_user_list1:
+			calc=user.user_id
+			userit=User.objects.get(id=calc)
+			accepted_user_list.append(userit)
+		print len(pending_user_list), len(accepted_user_list)
 		context = {'pending_user_list': pending_user_list, 'accepted_user_list': accepted_user_list, 'flag': flag}
 	else:
 		user=UserProfile.objects.get(user_id=request.user.id)
 		if(user.status==0):
 			flag=2
+			return redirect('not_authorized')
 		else:
 			flag=3
 		context={'flag': flag}
 	return render(request, 'sigegov/index.html',context);
+@login_required
+def not_authorized(request):
+	context={'flag': 1}
+	return render(request, 'sigegov/not_authorized.html',context)
+
 @login_required
 def authorize_user(request, userID):
 	user=UserProfile.objects.get(user_id=userID)
 	user.status=1
 	user.save()
 	return redirect('home')
+@login_required
+def user_details(request, userID):
+	user=User.objects.get(id=userID)
+	user.save()
+	context={'user': user}
+	return render(request, 'sigegov/user_details.html',context);
 @login_required
 def camp_donate(request,campID):
 	query = Camp.objects.get(id=campID)
