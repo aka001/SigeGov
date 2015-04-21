@@ -133,3 +133,4 @@ SOCIAL_AUTH_PIPELINE = (
 )
 STATIC_URL = '/static/'
 
+AUTH_PROFILE_MODULE = "sigegov.UserProfile"
