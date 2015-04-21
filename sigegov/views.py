@@ -9,10 +9,12 @@ from datetime import datetime as dt
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications, UserProfile
+from vote.managers import Vote
 from sigegov.forms import PublicationsSearchForm
 from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
 from django.shortcuts import redirect
+from django.db.models import Q
 import csv
 import logging
 
@@ -39,17 +41,40 @@ def autocomplete(request):
 	return HttpResponse(the_data, content_type='application/json')
 
 def publications(request):
-	#qval = request.GET.get('q')
-	#logging.error(qval)
-	#if qval:
-	#	sqs = SearchQuerySet().autocomplete(content_auto=qval)[:5]
-#else:
-#logging.error(SearchQuerySet().autocomplete(content_auto='gujarat'))
-	#logging.error(suggestions)
 	form = PublicationsSearchForm(request.GET)
 	publications = form.search()
 	context = {'publications':publications}
 	return render(request,'sigegov/publications.html',context)
+
+def view_publication(request, pubID):
+	uID = request.user.id
+	pub = Publications.objects.get(id=pubID)
+	p_count = Vote.objects.filter(Q(object_id=pubID), Q(user_id=uID))
+	p_count = len(p_count)
+	flag=0
+	if(p_count == 1):
+		flag=1
+	count = Vote.objects.filter(object_id=pubID)
+	count = len(count)
+	for field in pub._meta.fields:
+		print field.name
+	context = {'pub': pub, 'flag': flag, 'count': count}
+	return render(request, 'sigegov/view_publication.html',context)
+
+@login_required
+def process_upvote(request, pubID):
+	user=request.user
+	pub=Publications.objects.get(pk=pubID)
+	pub.votes.up(user)
+	return redirect('/sigegov/view_publication/'+str(pubID)+'/')
+
+@login_required
+def process_downvote(request, pubID):
+	user=request.user
+	pub=Publications.objects.get(pk=pubID)
+	pub.votes.down(user)
+	return redirect('/sigegov/view_publication/'+str(pubID)+'/')
+
 
 @login_required
 def view_request(request,requestID):
