@@ -11,12 +11,31 @@ from django.template import RequestContext, loader
 from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications
 from sigegov.forms import PublicationsSearchForm
 from django.contrib.auth.decorators import login_required
+from haystack.query import SearchQuerySet
 import csv
+
 
 emailil="bloodconnect14@gmail.com"
 
+import logging
+
+def autocomplete(request):
+	logging.error(request.GET.get('q'))
+	sqs = SearchQuerySet().autocomplete(content_auto=request.GET.get('q','asdfas'))
+	suggestions = [result.project_title for result in sqs]
+	the_data = json.dumps({
+	         'results': suggestions
+	})
+	return HttpResponse(the_data, content_type='application/json')
 
 def publications(request):
+	#qval = request.GET.get('q')
+	#logging.error(qval)
+	#if qval:
+	#	sqs = SearchQuerySet().autocomplete(content_auto=qval)[:5]
+#else:
+#logging.error(SearchQuerySet().autocomplete(content_auto='gujarat'))
+	#logging.error(suggestions)
 	form = PublicationsSearchForm(request.GET)
 	publications = form.search()
 	context = {'publications':publications}
