@@ -6,9 +6,14 @@ from django.template import RequestContext, loader, Context
 class PublicationsIndex(indexes.SearchIndex, indexes.Indexable):
 	text = indexes.CharField(document = True, use_template = True)
 	document_id = indexes.CharField(model_attr = 'document_id')
+	state = indexes.CharField(model_attr = 'state')
+        category = indexes.CharField(model_attr = 'category')
 	project_title = indexes.CharField(model_attr = 'project_title')
 	
-	content_auto = indexes.EdgeNgramField(model_attr='project_title')
+	project_auto = indexes.EdgeNgramField(model_attr='project_title')
+	state_auto = indexes.EdgeNgramField(model_attr='state')
+	category_auto = indexes.EdgeNgramField(model_attr='category')
+        #content_auto = indexes.EdgeNgramField(document=True, use_template=True)
 
 	def get_model(self):
 		return Publications
