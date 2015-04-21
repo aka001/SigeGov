@@ -8,7 +8,7 @@ class PublicationsIndex(indexes.SearchIndex, indexes.Indexable):
 	document_id = indexes.CharField(model_attr = 'document_id')
 	project_title = indexes.CharField(model_attr = 'project_title')
 	
-	#content_auto = indexes.EdgeNgramField(model_attr='document_id')
+	content_auto = indexes.EdgeNgramField(model_attr='project_title')
 
 	def get_model(self):
 		return Publications

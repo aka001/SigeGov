@@ -49,6 +49,7 @@ urlpatterns = [
 	url(r'^home/$',views.home,name='home'),
 	url(r'^todaycamp/$',views.todaycamp,name='todaycamp'),
 	url(r'^publications/$',views.publications,name='publications'),
+	url(r'^autocomplete/$',views.autocomplete,name='autocomplete'),
     url(r'^search/$',include('haystack.urls')),
 ]
 
