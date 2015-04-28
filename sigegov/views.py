@@ -26,7 +26,6 @@ def autocomplete(request):
 	state = request.GET.get('state')
 	category = request.GET.get('category')
 	department_name = request.GET.get('department_name')
-        logging.error(search_text)
 	if project_title or state or category or department_name or search_text:
 	#dat = request.GET.get('dat')
 	        sqs = SearchQuerySet().autocomplete(project_title_auto=project_title, state_auto=state, category_auto=category, department_name_auto=department_name, text = search_text)
@@ -36,7 +35,7 @@ def autocomplete(request):
 		
         #sqs1 = SearchQuerySet().autocomplete(department_name_auto=department_name, category_auto= category)
         #sqs1 = SearchQuerySet().autocomplete(project_title_auto=project_title)
-        suggestions = [(result.project_title, result.state, result.category, result.department_name) for result in sqs]
+        suggestions = [(result.project_title, result.state, result.category, result.department_name, (result.id).split('.')[2]) for result in sqs]
         #suggestions1 = [(result.project_title, result.state) for result in sqs1]
 
         """sqs = SearchQuerySet().autocomplete(project_title_auto=project_title,
@@ -108,6 +107,17 @@ def view_publication(request, pubID):
 		print field.name
 	context = {'pub': pub, 'flag': flag, 'count': count, 'current_path': current_path}
 	return render(request, 'sigegov/view_publication.html',context)
+
+def compare_publications(request, pubId_list):
+        pubsIds = pubId_list.split(',')
+        logging.error(pubsIds)
+        pubs = []
+        for i in pubsIds:
+                pubs.append(Publications.objects.get(id=i))
+        logging.error(pubs)
+
+	context = {'pubs': pubs}
+	return render(request, 'sigegov/compare_publications.html',context)
 
 @login_required
 def process_upvote(request, pubID):
