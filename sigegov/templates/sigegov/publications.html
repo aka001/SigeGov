@@ -34,7 +34,10 @@
 <th>Project Title<br><input type="text" id="project_title" class="que" autofocus="autofocus"></th>
 {% if state %}
 <th>State<br><input type="text" id="state" class="que" value="{{state}}"></th>
+{% else %}
+<th>State<br><input type="text" id="state" class="que"></th>
 {% endif %}
+
 <th>Department Name<br><input type="text" id="department_name" class="que"></th>
 <th>Category<br><input type="text" id="category" class="que"></th>
 </thead>
