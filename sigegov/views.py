@@ -18,8 +18,8 @@ from django.db.models import Q
 import csv
 import logging
 
-emailil="bloodconnect14@gmail.com"
-
+emailil="sigegov.gov@gmail.com"
+#emailil="akash.wanted@gmail.com"
 def autocomplete(request):
 	search_text = request.GET.get('search_text')
 	project_title = request.GET.get('project_title')
@@ -71,13 +71,17 @@ def autocomplete(request):
 	})
 	return HttpResponse(the_data, content_type='application/json')
 
-def publications(request):
+def publications(request,stateID=None):
+	#if stateID:
+	#	form = PublicationsSearchForm()
+	#else:
 	form = PublicationsSearchForm(request.GET)
 	publications = form.search()
-	context = {'publications':publications}
+	context = {'publications':publications,'state':stateID}
 	return render(request,'sigegov/publications.html',context)
 
 def view_publication(request, pubID):
+	current_path=request.get_full_path()
 	uID = request.user.id
 	pub = Publications.objects.get(id=pubID)
 	p_count = Vote.objects.filter(Q(object_id=pubID), Q(user_id=uID))
@@ -89,7 +93,7 @@ def view_publication(request, pubID):
 	count = len(count)
 	for field in pub._meta.fields:
 		print field.name
-	context = {'pub': pub, 'flag': flag, 'count': count}
+	context = {'pub': pub, 'flag': flag, 'count': count, 'current_path': current_path}
 	return render(request, 'sigegov/view_publication.html',context)
 
 @login_required
@@ -113,6 +117,9 @@ def view_request(request,requestID):
 	context={'requestit':request_list}
 	return render(request,'blood/view_request.html',context)
 
+def view_statewise(request):
+	context = {}
+	return render(request,'sigegov/view_statewise.html',context)
 
 def enter_data(request):
 	"""Used for entering the data into the Publications database."""
@@ -207,6 +214,7 @@ def send_email1(request):
 		mailit.append(i.email)
 		send_mail(subject, body, email,mailit)
 	return render(request,'blood/send_email1.html')
+
 @login_required
 def index(request):
     if request.user.is_authenticated():
@@ -570,7 +578,17 @@ def camps_detail(request):
 	email=request.user
 	context={'camp_list':camp_list, 'email':email ,'going_list':going_list,'going':going}
 	return render(request,'blood/camps_detail.html', context)
-
+@login_required
+def send_email_sigegov(request,page_path):
+	if request.user.is_authenticated:
+		user=request.user.username
+	if request.method == 'POST':
+		email=[]
+		email.append(request.POST['email'])
+		message=request.POST['message']
+		subject='Sigegov query from '+request.POST['email']
+		send_mail(subject, message, emailil, email)
+	return redirect(page_path)
 @login_required
 def bloodcamp_form(request):
 	if request.user.is_authenticated:

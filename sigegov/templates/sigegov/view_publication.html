@@ -5,14 +5,11 @@
 {% block content-body %}
 {% load comments %}
 <!--<br/><br/><br/><br/><br/><br/><br/><br/><br/> -->
+
 <center><h1>{{ pub.project_title }} </h1></center><br/>
 
-<ul class="list-inline" style="float:left;">
-  <li>
-
-  <h3>{{ count }} </h3>
-</li>
-<li>
+<div style="float:left;">
+<br/>
 <!--<p>{{ count }} upvotes </p-->
 {% ifequal flag 1 %}
 <a href="/sigegov/process_downvote/{{ pub.id }}"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-arrow-up"></span></button></a>
@@ -22,9 +19,32 @@
 <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-up"></span></button>
 </a>
 {% endifequal %}
-</li></ul>
+<br/>
+<button class="btn btn-primary" style="width:91%;"><span style="text-align:center;"><h4>{{ count }}</h4></span></button>
+</div>
 <!-- TABLE CONTENTS -->
 <script type = "text/javascript">
+// Instance the tour
+var tour = new Tour({
+  steps: [
+  {
+    element: "#my-element",
+    title: "Title of my step",
+    content: "Content of my step"
+  },
+  {
+    element: "#my-other-element",
+    title: "Title of my step",
+    content: "Content of my step"
+  }
+]});
+
+// Initialize the tour
+tour.init();
+
+// Start the tour
+tour.start();
+
 /*
 Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
 */
@@ -71,7 +91,7 @@ $(document).ready(function(){
     });
 });
 </script>
-    <div style="margin:auto;width:75%;float:center;"> 
+    <div style="margin: auto;width:75%;float:center;" id="ContentTable"> 
 
     <div class="row">
         <div class="panel panel-primary filterable">
@@ -280,7 +300,7 @@ $(document).ready(function(){
   </div>
 <!--TABLE CONTENT END -->
 
-
+<!--
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
@@ -300,9 +320,9 @@ $(document).ready(function(){
   </div>
  
 </div>
+-->
 
-
-
+<!--  OPEN FOR DEBUG UPVOTE AND DOWNVOTE
 {% get_comment_count for pub as comment_count %}
 <p>{{ count }} upvotes </p>
 {% ifequal flag 1 %}
@@ -313,34 +333,41 @@ $(document).ready(function(){
 <a href="/sigegov/process_upvote/{{pub.id}}">Upvote</a>
 {% endifequal %}
 
+--> 
+<hr/>
 
-<p>{{ comment_count }} comments have been posted.</p>
+<h4>{{ comment_count }} comments have been posted.</h4>
 
 {% get_comment_list for pub as comment_list %}
 {% for comment in comment_list %}
-<p>Posted by: {{ comment.user_name }} on {{ comment.submit_date }}</p>
-<p>Comment: {{ comment.comment }}</p>
-{% endfor %}
+<div class="comment-cl">
+<i> Posted by: <b>{{ comment.user_name }}</b> on {{ comment.submit_date }}</p> </i>
 
+<p>  {{ comment.comment }}</p>
+</div>
+<br/>
+{% endfor %}
+<hr/>
+<h4>Post a comment !</h4>
 {% get_comment_form for pub as form %}
-<table border="2">
+<table style="width:100%;">
   <form action="{% comment_form_target %}" method="post">
     {% csrf_token %}
     {{ form.content_type }}
     {{ form.object_pk }}
     {{ form.timestamp }}
-    {{ form.security_hash }}<table>
+    {{ form.security_hash }}
     <tr>
-    <td>Name:</td> <td>   {{ form.name    }} </td>
+    <td><h4>Name</h4></td> <td style="padding-left:15px">   {{ form.name    }} </td><br/>
+    </tr><tr><td><h4>Comment</h4> </td><td style="padding-left:15px"> {{ form.comment }}</td>
     </tr>
-    <tr><td>Comment </td><td > {{ form.comment }}</td>
-    </tr>
-   <br/>
     <input type="hidden" name="next" value="/sigegov/view_publication/{{pub.id}}" />
     <tr>
-      <td colspan="2">
-        <input class="btn btn-default" type="submit" name="submit" value="Post">
-        <input class="btn btn-default" type="submit" name="preview" value="Preview">
+    <td>
+    </td>
+      <td style="padding-left:15px">
+        <input class="btn btn-success" type="submit" name="submit" value="Post">
+        <input class="btn btn-primary" type="submit" name="preview" value="Preview">
       </td>
     </tr>
   </form>

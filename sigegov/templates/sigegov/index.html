@@ -1,19 +1,43 @@
-<h2>Hie</h2>
-{% load i18n %}
+{% extends "sigegov/base.html" %}
 {% block content-body %}
+<h2>Welcome to Administrator Page</h2>
+{% load i18n %}
 {% ifequal flag 1 %}
 
-<h2>Pending Users</h2>
+<h3>Pending Users</h3>
+<table class="table">
+<tr>
 {% for user in pending_user_list %}
-	 <a href="/sigegov/user_details/{{user.id}}">{{user}}</a> <a href="/sigegov/authorize_user/{{user.id}}">Change it's status</a> <br/>
+
+<td>	
+	 <a href="/sigegov/user_details/{{user.id}}">{{user}}</a> <a href="/sigegov/authorize_user/{{user.id}}">Change it's status</a> 
+</td>
 {% endfor %}
+</td>
+</table>
+
+
+<h3>Accepted Users</h3>
+<table class="table">
+<tr>
+{% for user in accepted_user_list %}
+<tr>
+<td>	
+	 <a href="/sigegov/user_details/{{user.id}}">{{user}}</a>
+</td></tr>
+{% endfor %}
+</td>
+</table>
+
+
+<!-- EXTRA	
 <h2>Accepted Users</h2>
 {% for user in accepted_user_list %}
 	 <a href="/sigegov/user_details/{{user.id}}">{{user}}</a> <br/>
 {% endfor %}
 
 {% endifequal %}
-
+-->
 {% ifequal flag 2 %}
 	<h3>You are not authorized to view this page</h3>
 {% endifequal %}
