@@ -80,10 +80,15 @@ def publications(request,stateID=None):
 	context = {'publications':publications,'state':stateID}
 	return render(request,'sigegov/publications.html',context)
 
-def handle_uploaded_file(f):
-	with open('some/file/name.txt', 'wb+') as destination:
-	 for chunk in f.chunks():
-		destination.write(chunk)
+def members(request):
+	members = UserProfile.objects.filter(status=1)
+	accepted_user_list=[]
+	for user in members:
+		 calc=user.user_id
+	         userit=User.objects.get(id=calc)
+	         accepted_user_list.append(userit)
+	context = {'members':accepted_user_list}
+	return render(request,'sigegov/members.html',context)
 
 def create_event(request):
 	if request.method=='POST':

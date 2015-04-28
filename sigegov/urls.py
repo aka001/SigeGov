@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^show_event/$',views.show_event,name='show_event'),
     url(r'^download/(?P<file_name>\S+)/$',views.download,name='download'),
     url(r'^compare_publications/(?P<pubId_list>\S+)/$',views.compare_publications,name='compare_publications'),
+    url(r'^members/$',views.members,name='members'),
 
     url(r'^view_request_thanks/(?P<requestID>\S+)/$',views.view_request_thanks,name='view_request_thanks'),
     url(r'^view_request/(?P<requestID>\S+)/$',views.view_request,name='view_request'),
