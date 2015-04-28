@@ -33,13 +33,15 @@
 </th>
 </thead>
 </table-->
-<a class="btn btn-primary" onclick="checkbox_func()">Compare</a><br><br>
+<a data-step="3" data-intro="Select any two projects from respective checkboxes in table and click this button to compare between them." class="btn btn-primary" onclick="checkbox_func()">Compare</a><br><br>
+<div data-step="4" data-intro="This is the master search. Start typying your search and results will be displayed in the table below. Results include any matching results from all PDF records" >
 <label>Search in PDF</label>
-<input type="text" id="search_text" class="que">
+<input dtype="text" id="search_text" class="que">
+</div>
 <br/>
 <br/>
-<table id="example" class="table table-bordered table-hover" cellspacing="0" cellpadding="0" width="100%">
-<thead>
+<table  id="example" class="table table-bordered table-hover" cellspacing="0" cellpadding="0" width="100%">
+<thead >
 <th>Select</th>
 <th>Project Title<br><input type="text" id="project_title" class="que" autofocus="autofocus"></th>
 {% if state %}
@@ -51,7 +53,7 @@
 <th>Department Name<br><input type="text" id="department_name" class="que"></th>
 <th>Category<br><input type="text" id="category" class="que"></th>
 </thead>
-<tbody>
+<tbody data-step="5" data-intro="This section allows multi-index search simultaneously. Query results quickly. For example - All Govt-to-Citizen projects.Your search results are be displayed in this table">
 </tbody>
 </table>
 </form>
