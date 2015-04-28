@@ -21,16 +21,19 @@ import logging
 emailil="sigegov.gov@gmail.com"
 #emailil="akash.wanted@gmail.com"
 def autocomplete(request):
+	search_text = request.GET.get('search_text')
 	project_title = request.GET.get('project_title')
 	state = request.GET.get('state')
 	category = request.GET.get('category')
 	department_name = request.GET.get('department_name')
-        logging.error(project_title)
-        logging.error(state)
-        logging.error(category)
-        logging.error(department_name)
+        logging.error(search_text)
+	if project_title or state or category or department_name or search_text:
 	#dat = request.GET.get('dat')
-        sqs = SearchQuerySet().autocomplete(project_title_auto=project_title, state_auto=state, category_auto=category, department_name_auto=department_name)
+	        sqs = SearchQuerySet().autocomplete(project_title_auto=project_title, state_auto=state, category_auto=category, department_name_auto=department_name, text = search_text)
+	else:
+		#logging.error(search_text)
+		sqs = SearchQuerySet()#.autocomplete(text=search_text)
+		
         #sqs1 = SearchQuerySet().autocomplete(department_name_auto=department_name, category_auto= category)
         #sqs1 = SearchQuerySet().autocomplete(project_title_auto=project_title)
         suggestions = [(result.project_title, result.state, result.category, result.department_name) for result in sqs]
@@ -68,13 +71,13 @@ def autocomplete(request):
 	})
 	return HttpResponse(the_data, content_type='application/json')
 
-def publications(request, stateID=None):
-	if stateID:
-		form = PublicationsSearchForm(stateID)
-	else:
-		form = PublicationsSearchForm(request.GET)
+def publications(request,stateID=None):
+	#if stateID:
+	#	form = PublicationsSearchForm()
+	#else:
+	form = PublicationsSearchForm(request.GET)
 	publications = form.search()
-	context = {'publications':publications}
+	context = {'publications':publications,'state':stateID}
 	return render(request,'sigegov/publications.html',context)
 
 def create_event(request):
