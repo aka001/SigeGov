@@ -24,13 +24,15 @@
 	<link rel="stylesheet" href="/static/css/bootstrap.css">
 	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
-	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script-->
+
 	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
 	<script src="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
 	<!--script src="//code.jquery.com/jquery-2.1.3.min.js"></script-->
 	<script src="/static/js/bootstrap.min.js"></script>
+	<script src="/static/js/bootstrap-tour.min.js"></script>
+
 	<script src="/static/js/bootstrap.js"></script>
 	<!--<script type="text/javascript">
 	function googleTranslateElementInit() {
@@ -39,6 +41,26 @@
 	</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 	-->
 	<style>
+.floatleft
+{
+float: left;
+width: 100px;
+margin: 0 0 10px 10px;
+overflow-x: auto;
+max-width: 100%;
+position:fixed;
+z-index: 19999;
+}
+ 
+#share-buttons img {
+width: 35px;
+padding: 5px;
+border: 0;
+box-shadow: 0;
+
+}
+ 
+
 
 	#ContentTable tr td:first-child
 	{
@@ -160,8 +182,7 @@ textarea:focus {
 				<a href="#">Events</a>
 			</nav>
 
-			<a href="#" class="logout-button">Hi {{ user }} | Logout <span class="
-glyphicon glyphicon-off" ></span></a>
+			<a href="#" class="logout-button">Hi {{ user }} | Logout <span class="glyphicon glyphicon-off" ></span></a>
 		</div>
 
 	</div>
@@ -190,9 +211,47 @@ glyphicon glyphicon-off" ></span></a>
 <br/>
 <br/>
 <br/>
-<br/>
-<br/>
+ 
 
+<div id="share-buttons" class="floatleft">
+ <br/>
+ <br/>
+ 
+<!-- Facebook -->
+<a href="http://www.facebook.com/sharer.php?u=http://www.csi-sigegov.org/" target="_blank"><img src="/static/img/facebook.png" alt="Facebook" /></a>
+<br/> 
+<br/>
+<!-- Twitter -->
+<a href="http://twitter.com/share?url=http://www.csi-sigegov.org/&text=Sigegov&hashtags=sigegov" target="_blank"><img src="/static/img/twitter.png" alt="Twitter" /></a>
+ <br/>
+ <br/
+<!-- Google+ -->
+<a href="https://plus.google.com/share?url=http://www.csi-sigegov.org/" target="_blank"><img src="/static/img/google.png" alt="Google" /></a>
+ <br/>
+ <br/>
+<!-- Digg -->
+<a href="http://www.digg.com/submit?url=http://www.csi-sigegov.org/" target="_blank"><img src="/static/img/diggit.png" alt="Digg" /></a>
+ <br/>
+ <br/>
+<!-- Reddit -->
+<a href="http://reddit.com/submit?url=http://www.csi-sigegov.org/&title=Sigegov" target="_blank"><img src="/static/img/reddit.png" alt="Reddit" /></a>
+ <br>
+ <br/>
+<!-- LinkedIn -->
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=http://www.csi-sigegov.org/" target="_blank"><img src="/static/img/linkedin.png" alt="LinkedIn" /></a>
+ <br/>
+<br/>
+<!-- Pinterest -->
+<a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><img src="/static/img/pinterest.png" alt="Pinterest" /></a>
+ 
+<br/><br/>
+<!-- StumbleUpon-->
+<a href="http://www.stumbleupon.com/submit?url=http://www.csi-sigegov.org/&title=Simple Share Buttons" target="_blank"><img src="/static/img/stumbleupon.png" alt="StumbleUpon" /></a>
+<br/> <br/>
+<!-- Email -->
+<a href="mailto:akash.wanted@gmail.com?Subject=Sigegov&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.csi-sigegov.org/"><img src="/static/img/email.png" alt="Email" /></a>
+ 
+</div>
 <div class="mainbodydef" style="margin:40px 80px;padding:30px;">
 {% block content-body%}
   <!--                   <h1>Hi, I am Stanley!</h1>
@@ -258,7 +317,6 @@ glyphicon glyphicon-off" ></span></a>
 			<div class="footer-right">
 
 				<p>Contact Us</p>
-
 				<form action="/sigegov/send_email_sigegov/{{current_path}}/" role="form" method="post">{% csrf_token %}
 					<input type="text" name="email" placeholder="Email" />
 					<textarea name="message" placeholder="Message"></textarea>
