@@ -10,11 +10,12 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications, UserProfile, Event
 from vote.managers import Vote
-from sigegov.forms import PublicationsSearchForm
+from sigegov.forms import PublicationsSearchForm, UploadEventForm
 from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
 from django.shortcuts import redirect
 from django.db.models import Q
+from filetransfers.api import serve_file
 import csv
 import logging
 
@@ -26,7 +27,6 @@ def autocomplete(request):
 	state = request.GET.get('state')
 	category = request.GET.get('category')
 	department_name = request.GET.get('department_name')
-        logging.error(search_text)
 	if project_title or state or category or department_name or search_text:
 	#dat = request.GET.get('dat')
 	        sqs = SearchQuerySet().autocomplete(project_title_auto=project_title, state_auto=state, category_auto=category, department_name_auto=department_name, text = search_text)
@@ -36,7 +36,7 @@ def autocomplete(request):
 		
         #sqs1 = SearchQuerySet().autocomplete(department_name_auto=department_name, category_auto= category)
         #sqs1 = SearchQuerySet().autocomplete(project_title_auto=project_title)
-        suggestions = [(result.project_title, result.state, result.category, result.department_name) for result in sqs]
+        suggestions = [(result.project_title, result.state, result.category, result.department_name, (result.id).split('.')[2]) for result in sqs]
         #suggestions1 = [(result.project_title, result.state) for result in sqs1]
 
         """sqs = SearchQuerySet().autocomplete(project_title_auto=project_title,
@@ -80,18 +80,48 @@ def publications(request,stateID=None):
 	context = {'publications':publications,'state':stateID}
 	return render(request,'sigegov/publications.html',context)
 
+def members(request):
+	members = UserProfile.objects.filter(status=1)
+	accepted_user_list=[]
+	for user in members:
+		 calc=user.user_id
+	         userit=User.objects.get(id=calc)
+	         accepted_user_list.append(userit)
+	context = {'members':accepted_user_list}
+	return render(request,'sigegov/members.html',context)
+
 def create_event(request):
-	context = {'publications': 1}
 	if request.method=='POST':
-		form=Event()
-		form.event=request.POST['event']
-		form.organiser=request.POST['organiser']
-		print request.POST
-		form.attachment=request.POST['attachment']
-		form.save()
+		form=UploadEventForm(request.POST, request.FILES)
+		if form.is_valid():
+			event = form.cleaned_data['event']
+			organiser = form.cleaned_data['organiser']
+			attachment = form.cleaned_data['attachment']
+			#handle_uploaded_file(request.FILES['file'])
+			#form.event=request.POST['event']
+			#form.organiser=request.POST['organiser']
+			#print request.POST
+			#form.attachment=request.POST['attachment']
+			instance = Event(organiser=organiser,event=event,attachment=attachment)
+			instance.save()
+			return HttpResponseRedirect('/sigegov/')
 	else:
-		form=Event()
+		form=UploadEventForm()
+	context = {'form': form}
 	return render(request, 'sigegov/create_event.html',context)
+
+def download(request, file_name=None):
+    logging.error(file_name)
+    with open('./'+file_name, 'rb') as pdf:
+	response = HttpResponse(pdf.read(),content_type='application/pdf')
+	response['Content-Disposition'] = 'filename=some_file.pdf'
+	return response
+    pdf.closed
+
+def show_event(request):
+	events = Event.objects.all()
+	context = {'events': events}
+	return render(request, 'sigegov/show_events.html',context)
 
 def view_publication(request, pubID):
 	current_path=request.get_full_path()
@@ -108,6 +138,17 @@ def view_publication(request, pubID):
 		print field.name
 	context = {'pub': pub, 'flag': flag, 'count': count, 'current_path': current_path}
 	return render(request, 'sigegov/view_publication.html',context)
+
+def compare_publications(request, pubId_list):
+        pubsIds = pubId_list.split(',')
+        logging.error(pubsIds)
+        pubs = []
+        for i in pubsIds:
+                pubs.append(Publications.objects.get(id=i))
+        logging.error(pubs)
+
+	context = {'pubs': pubs}
+	return render(request, 'sigegov/compare_publications.html',context)
 
 @login_required
 def process_upvote(request, pubID):

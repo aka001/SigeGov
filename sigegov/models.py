@@ -16,7 +16,7 @@ class UserProfile(models.Model):
 class Event(models.Model):
 	event=models.TextField()
 	organiser=models.TextField()
-	attachment = models.FileField(upload_to='%Y/%m/%d',blank=True)
+	attachment = models.FileField(upload_to='events/%Y/%m/%d',blank=True)
 
 class Publications(models.Model):
 	votes = VotableManager()

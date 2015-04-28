@@ -1,0 +1,8 @@
+{% extends "sigegov/base.html" %}
+{% load i18n %}
+{% block title %}Members{% endblock %}
+{% block content-body %}
+{% for i in members %}
+{{i.email}}<br/><br/>
+{% endfor %}
+{% endblock %}
