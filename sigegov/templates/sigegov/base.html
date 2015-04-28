@@ -31,6 +31,10 @@
 	<script src="/static/js/bootstrap.js"></script>
 	<style>
 
+	#ContentTable tr td:first-child
+	{
+		font-weight: bold;
+	}
 .filterable {
     margin-top: 15px;
 }
@@ -55,11 +59,54 @@
     color: #333;
 
 }
+
+.back-button-go{
+border-radius: 186px 186px 186px 186px;
+-moz-border-radius: 186px 186px 186px 186px;
+-webkit-border-radius: 186px 186px 186px 186px;
+border: 0px solid #000000;
+-webkit-box-shadow: inset 2px -2px 44px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 2px -2px 44px 0px rgba(0,0,0,0.75);
+box-shadow: inset 2px -2px 44px 0px rgba(0,0,0,0.75);
+width:10%;
+}
+
 .mainbodydef{
+	border-radius: 58px 21px 61px 21px;
+-moz-border-radius: 58px 21px 61px 21px;
+-webkit-border-radius: 58px 21px 61px 21px;
+border: 0px solid #000000;
 	-webkit-box-shadow: 0px 11px 31px 1px rgba(125,177,179,0.82);
 -moz-box-shadow: 0px 11px 31px 1px rgba(125,177,179,0.82);
 box-shadow: 0px 11px 31px 1px rgba(125,177,179,0.82);
 }
+
+.comment-cl
+{
+	width:1000px;
+     min-height:90px;
+     border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+border: 0px solid #000000;
+	background-color: #f5f3f0;
+	padding:8px 8px;
+
+}
+.comment-cl i{
+	color: #b0b0b0;
+}
+textarea
+    {
+     width:900px;
+     height:90px;
+     border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+border: 0px solid #000000;
+	background-color: #f5f3f0;
+    padding:8px 8px;
+    }
 textarea {
     width: 900px;
     height: 10em;
@@ -73,7 +120,7 @@ textarea {
 textarea:focus {
     box-shadow: inset 0 0 3px 2px rgba(125,177,179,0.82);; /* provides a more style-able
                                            replacement to the outline */
-}​
+                       }
 
 	</style>
 	<!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -100,7 +147,8 @@ textarea:focus {
 				<a href="#">Events</a>
 			</nav>
 
-			<a href="#" class="logout-button">Logout</a>
+			<a href="#" class="logout-button">Hi {{ user }} | Logout <span class="
+glyphicon glyphicon-off" ></span></a>
 		</div>
 
 	</div>
@@ -108,7 +156,7 @@ textarea:focus {
 	<div class="header-second-bar" style="z-index:100">
 
 		<div class="header-limiter">
-			<h2><a href="#">Survey name</a></h2>
+			<h2><a href="#">Dashboard</a></h2>
 
 			<nav>
 				<a href="#"><i class="fa fa-comments-o"></i> Search</a>
@@ -132,7 +180,7 @@ textarea:focus {
 <br/>
 <br/>
 
-<div class="mainbodydef" style="margin:40px 80px;padding:20px;">
+<div class="mainbodydef" style="margin:40px 80px;padding:30px;">
 {% block content-body%}
   <!--                   <h1>Hi, I am Stanley!</h1>
                     <p>Hello everybody. I'm Stanley, a free handsome bootstrap theme coded by BlackTie.co. A really simple theme for those wanting to showcase their work with a cute & clean style.</p>
@@ -146,8 +194,6 @@ textarea:focus {
 <br/>
 <br/>
 <br/>
-<br/><br/>
-
 <br/>
 <br/>
 <br/>
@@ -156,28 +202,8 @@ textarea:focus {
 <br/>
 <br/>
 <br/>
-<br/><br/>
-
 <br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/><br/>
-
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/><br/>
-
+	<br/>
 <br/>
 <br/>
 
@@ -233,10 +259,10 @@ textarea:focus {
 </footer>
 
 
-<!-- Demo ads. Please ignore and remove. -->
+<!-- Demo ads. Please ignore and remove.
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.tutorialzine.com/misc/enhance/v3.js" async></script>
-
+-->
 
 
 </html>
