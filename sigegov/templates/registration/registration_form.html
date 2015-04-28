@@ -2,10 +2,62 @@
 {% load i18n %}
 
 {% block content-body %}
-<form method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
 
-  <input type="submit" value="{% trans 'Submit' %}" />
+<form method="post" role=".">
+{{form.as_p}}
+   <input type="submit" class="btn btn-success" value="{% trans 'Submit' %}" />
+
 </form>
+<!--					
+					<div style="margin:auto;width:60%;">
+
+					<h2>Login</h2>
+						<hr/>
+
+                            <form id="signupform" class="form-horizontal" action="." method="post" role="form">{%csrf_token%}
+                                
+                                <div id="signupalert" style="display:none" class="alert alert-danger">
+                                    <p>Error:</p>
+                                    <span></span>
+                                </div>
+                                    
+                                
+                                  
+                                <div class="form-group">
+                                    <label for="email" >Email</label>
+                                   
+                                          <input id="{{form.email.id_for_label}}" type="text" class="form-control" name="{{form.email.html_name}}" placeholder="Email Address" >
+                                   
+                                </div>
+                                    
+                                <div class="form-group">
+                                    <label for="firstname" >Username</label>
+                                        <input id="{{form.username.id_for_label}}" type="text" class="form-control" name="{{form.username.html_name}}" placeholder="Username" >
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname" >Password</label>
+                                        <input id="{{form.password1.id_for_label}}" type="password" class="form-control" name="{{form.password1.html_name}}" placeholder="Password" >
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" >Password Again</label>
+                                        <input id="{{form.password2.id_for_label}}" type="password" class="form-control" name="{{form.password2.html_name}}" placeholder="Retype Password" >
+                                                                   </div>
+                                    
+                                
+
+                                <div class="form-group">
+                                                                           
+                                        <input type="submit" class="btn btn-success" value="{% trans 'Submit' %}" />
+                                   
+                                </div>
+                                
+                                                                
+                                
+                                
+                            </form>
+                     </div>
+-->
+
 {% endblock %}

@@ -1,9 +1,43 @@
 {% extends "sigegov/base.html" %}
 {% load i18n %}
+
 {% block content-body %}
+
+<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$('#example').dataTable();
+			} );
+		</script>
+
+		<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Project Title</th>
+                <th>Submittee</th>
+                <th>Complete PDF</th>
+                
+            </tr>
+        </thead>
+ 
+        <tfoot>
+            <tr>
+                  <th>Project Title</th>
+                <th>Submittee</th>
+                <th>Complete PDF</th>
+            </tr>
+        </tfoot>
+ 
+        <tbody>
+           
 {% for i in events %}
-	{{i.event}}
-	{{i.organiser}}
-	<a target="blank" href="/sigegov/download/{{i.attachment}}">File</a>
+		<tr>
+			<th>{{i.event}}</th>
+			<th>{{i.organiser}}</th>
+			<th><a target="blank" href="/sigegov/download/{{i.attachment}}">File</a></th>
+		</tr>
 {% endfor %}
+
+</tbody>
+</table>
+
 {% endblock %}

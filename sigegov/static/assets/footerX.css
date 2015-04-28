@@ -57,7 +57,9 @@
 .footer-distributed .footer-icons{
 	margin-top: 40px;
 }
-
+.footed-distributed .footer-center img{
+	display:inline;
+}
 .footer-distributed .footer-icons a{
 	display: inline-block;
 	width: 35px;
