@@ -69,11 +69,13 @@ $(document).ready(function(){
     });
 });
 </script>
-{% for pub in pubs %}
+<table >
+<tr>
 
-    <div style="margin: auto;width:75%;float:center;" id="ContentTable"> 
-
-    <div class="row">
+    <!--<div style="margin: auto;width:75%;float:center;" id="ContentTable">--> 
+    
+    <td>
+    
         <div class="panel panel-primary filterable">
             <div class="panel-heading">
                 <h3 class="panel-title">Project Details</h3>
@@ -93,9 +95,11 @@ $(document).ready(function(){
                         <td> {{ pub.project_title }} </td>
                     </tr>
 
-  <tr>
+  <tr>  
     <td >Document Id</td>
-    <td >{{pub.document_id}}</td>
+    <td >{{ pubs[i].document_id }}</td>
+    <td >{{ pubs[i+1].document_id }}</td>
+    
   </tr>
   <tr>
     <td >Department Name</td>
@@ -276,8 +280,8 @@ $(document).ready(function(){
                 </tbody>
             </table>
         </div>
-    </div>
-  </div>
+    </td>
   {% endfor %}
+  </tr></table>
 <!--TABLE CONTENT END -->
 {% endblock %}

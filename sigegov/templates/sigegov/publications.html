@@ -52,6 +52,7 @@
 
 <th>Department Name<br><input type="text" id="department_name" class="que"></th>
 <th>Category<br><input type="text" id="category" class="que"></th>
+<th>Pdf</th>
 </thead>
 <tbody data-step="5" data-intro="This section allows multi-index search simultaneously. Query results quickly. For example - All Govt-to-Citizen projects.Your search results are be displayed in this table">
 </tbody>
@@ -162,6 +163,9 @@ Autocomplete.prototype.show_results = function(data) {
                 var state_cell = row.insertCell(2);
                 var department_name_cell = row.insertCell(3);
                 var category_cell = row.insertCell(4);
+                var pdf_cell = row.insertCell(5);
+		console.log(pubId);
+                pdf_cell.innerHTML = "<a href='/sigegov/pdfopen/"+  pubId + "'>File</a>";
                 
                 checkbox.innerHTML = "<input type='checkbox' name='check' value='" + pubId + "'>";
                 checkbox.className = 'row2';
