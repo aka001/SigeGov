@@ -17,10 +17,46 @@ from django.shortcuts import redirect
 from django.db.models import Q
 import csv
 import logging
-
+current_path="/sigegov/home"
 emailil="sigegov.gov@gmail.com"
 #emailil="akash.wanted@gmail.com"
+@login_required
+def home(request):
+    	current_path=request.get_full_path()
+	username = request.user.username
+	is_superuser=request.user.is_superuser
+	flag=0
+	context={'flag': flag}
+	if(is_superuser):
+		flag=1
+		pending_user_list1=UserProfile.objects.filter(status=0)
+		accepted_user_list1=UserProfile.objects.filter(status=1)
+		pending_user_list=[]
+		accepted_user_list=[]
+		for user in pending_user_list1:
+			if(user.user.username=='admin'):
+				continue
+			calc=user.user_id
+			userit=User.objects.get(id=calc)
+			pending_user_list.append(userit)
+		for user in accepted_user_list1:
+			if(user.user.username=='admin'):
+				continue
+			calc=user.user_id
+			userit=User.objects.get(id=calc)
+			accepted_user_list.append(userit)
+		context = {'pending_user_list': pending_user_list, 'accepted_user_list': accepted_user_list, 'flag': flag}
+	else:
+		user=UserProfile.objects.get(user_id=request.user.id)
+		if(user.status==0):
+			flag=2
+			return redirect('not_authorized')
+		else:
+			flag=3
+		context={'flag': flag, 'current_path': current_path}
+	return render(request, 'sigegov/index.html',context);
 def autocomplete(request):
+    	current_path=request.get_full_path()
 	search_text = request.GET.get('search_text')
 	project_title = request.GET.get('project_title')
 	state = request.GET.get('state')
@@ -71,29 +107,35 @@ def autocomplete(request):
 	return HttpResponse(the_data, content_type='application/json')
 
 def publications(request,stateID=None):
-	#if stateID:
-	#	form = PublicationsSearchForm()
-	#else:
+    	current_path=request.get_full_path()
 	form = PublicationsSearchForm(request.GET)
 	publications = form.search()
-	context = {'publications':publications,'state':stateID}
+	context = {'publications':publications,'state':stateID, 'current_path': current_path}
 	return render(request,'sigegov/publications.html',context)
 
 def members(request):
+    	current_path=request.get_full_path()
 	members = UserProfile.objects.filter(status=1)
 	accepted_user_list=[]
 	for user in members:
 		 calc=user.user_id
 	         userit=User.objects.get(id=calc)
 	         accepted_user_list.append(userit)
-	context = {'members':accepted_user_list}
+	context = {'members':accepted_user_list, 'current_path': current_path}
 	return render(request,'sigegov/members.html',context)
 
+def objectives(request):
+    	current_path=request.get_full_path()
+	context = {'i': 1, 'current_path': current_path}
+	return render(request, 'sigegov/objectives.html', context)
+
 def executive_committee(request):
-	context = {'i': 1}
-	return reender(request, 'sigegov/executive_committee.html', context)
+    	current_path=request.get_full_path()
+	context = {'i': 1, 'current_path': current_path}
+	return render(request, 'sigegov/executive_committee.html', context)
 
 def create_event(request):
+    	current_path=request.get_full_path()
 	if request.method=='POST':
 		form=UploadEventForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -110,10 +152,11 @@ def create_event(request):
 			return HttpResponseRedirect('/sigegov/')
 	else:
 		form=UploadEventForm()
-	context = {'form': form}
+	context = {'form': form, 'current_path': current_path}
 	return render(request, 'sigegov/create_event.html',context)
 
 def pdfopen(request, pdf_id=None):
+    current_path=request.get_full_path()
     pub = Publications.objects.get(id=pdf_id)
     if pub.attachment:
 	    with open(str(pub.attachment), 'rb') as pdf:
@@ -121,10 +164,11 @@ def pdfopen(request, pdf_id=None):
 		response['Content-Disposition'] = 'filename=some_file.pdf'
 		return response
 	    pdf.closed
-    context = {}
+    context = {'current_path': current_path}
     return render(request, 'sigegov/pdfopen.html',context)
 
 def download(request, file_name=None):
+    current_path=request.get_full_path()
     logging.error(file_name)
     with open('./'+file_name, 'rb') as pdf:
 	response = HttpResponse(pdf.read(),content_type='application/pdf')
@@ -133,8 +177,10 @@ def download(request, file_name=None):
     pdf.closed
 
 def show_event(request):
+	current_path=request.get_full_path()
+	print current_path
 	events = Event.objects.all()
-	context = {'events': events}
+	context = {'events': events, 'current_path': current_path}
 	return render(request, 'sigegov/show_events.html',context)
 
 def view_publication(request, pubID):
@@ -154,6 +200,7 @@ def view_publication(request, pubID):
 	return render(request, 'sigegov/view_publication.html',context)
 
 def compare_publications(request, pubId_list):
+	current_path=request.get_full_path()
         pubsIds = pubId_list.split(',')
         logging.error(pubsIds)
         pubs = []
@@ -314,40 +361,6 @@ def view_story(request,story_id):
 	context = {'order_list': order_list}
 	return render(request, 'blood/view_story.html', context)
 #	order_list = Story.objects.
-@login_required
-def home(request):
-	username = request.user.username
-	is_superuser=request.user.is_superuser
-	flag=0
-	context={'flag': flag}
-	if(is_superuser):
-		flag=1
-		pending_user_list1=UserProfile.objects.filter(status=0)
-		accepted_user_list1=UserProfile.objects.filter(status=1)
-		pending_user_list=[]
-		accepted_user_list=[]
-		for user in pending_user_list1:
-			if(user.user.username=='admin'):
-				continue
-			calc=user.user_id
-			userit=User.objects.get(id=calc)
-			pending_user_list.append(userit)
-		for user in accepted_user_list1:
-			if(user.user.username=='admin'):
-				continue
-			calc=user.user_id
-			userit=User.objects.get(id=calc)
-			accepted_user_list.append(userit)
-		context = {'pending_user_list': pending_user_list, 'accepted_user_list': accepted_user_list, 'flag': flag}
-	else:
-		user=UserProfile.objects.get(user_id=request.user.id)
-		if(user.status==0):
-			flag=2
-			return redirect('not_authorized')
-		else:
-			flag=3
-		context={'flag': flag}
-	return render(request, 'sigegov/index.html',context);
 @login_required
 def not_authorized(request):
 	context={'flag': 1}

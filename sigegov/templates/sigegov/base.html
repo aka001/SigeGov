@@ -187,12 +187,13 @@ textarea:focus {
 			<nav>
 				
         
-				<a href="#">Objectives</a>
-				<a href="#">Executive Commitee</a>
-				<a href="#">Publications</a>
-				<a href="#" class="selected">Members</a>
-				<a href="#">Awards</a>
-				<a href="#">Events</a>
+				<a href="/sigegov/home/">Home</a>
+				<a href="/sigegov/objectives/">Objectives</a>
+				<a href="/sigegov/executive_committee/">Executive Commitee</a>
+				<a href="/sigegov/publications/">Publications</a>
+				<a href="/sigegov/members">Members</a>
+				<a href="http://www.csinihilent-egovernanceawards.org/" target=blank>Awards</a>
+				<a href="/sigegov/show_event/">Events</a>
 			</nav>
 
 			<a href="#" class="logout-button">Hi {{ user }} | Logout <span class="glyphicon glyphicon-off" ></span></a>
@@ -204,14 +205,11 @@ textarea:focus {
 	<div class="header-second-bar" style="z-index:100" data-step="2" data-intro="Use this secondary bar to quickly access features">
 
 		<div class="header-limiter">
-			<h2><a href="#">Dashboard</a></h2>
+			<h2><a href="/sigegov/home/">Dashboard</a></h2>
 
 			<nav>
-				<a class="btn btn-large btn-default" href="javascript:void(0);" onclick="javascript:introJs().setOption('showProgress', true).start();">Give a demo</a>
-				<a href="#"><i class="fa fa-comments-o"></i> Search</a>
-				<a href="#"><i class="fa fa-file-text"></i> Browse</a>
-				<a href="#"><i class="fa fa-group"></i> Feedback</a>
-				<a href="#"><i class="fa fa-cogs"></i> Project Members</a>
+				<a href="javascript:void(0);" onclick="javascript:introJs().setOption('showProgress', true).start();"><i class="fa fa-file-text"></i>Give a demo</a>
+				<a href="/sigegov/publications/"><i class="fa fa-comments-o"></i> Search</a>
 			</nav>
 
 		</div>
@@ -303,11 +301,12 @@ textarea:focus {
 			<div class="footer-left">
 
 				<!--<h3>Company<span>logo</span></h3>-->
-
 				<p class="footer-links">
-					<a href="#">Home</a>
-					·
-					<a href="#">About</a>
+					&nbsp;
+					&nbsp;
+					&nbsp;
+					&nbsp;
+					<a href="/sigegov/home/">Home</a>
 					·
 					<a href="#">Faq</a>
 					·
@@ -337,12 +336,19 @@ textarea:focus {
 			<div class="footer-right">
 
 				<p>Contact Us</p>
-				<form action="/sigegov/send_email_sigegov/{{current_path}}/" role="form" method="post">{% csrf_token %}
+				{% if current_path %}
+				<form action="/sigegov/send_email_sigegov/{{current_path}}" role="form" method="post">{% csrf_token %}
 					<input type="text" name="email" placeholder="Email" />
 					<textarea name="message" placeholder="Message"></textarea>
 					<button>Send</button>
-
 				</form>
+				{% else %}
+				<form action="/sigegov/send_email_sigegov/sigegov/home/" role="form" method="post">{% csrf_token %}
+					<input type="text" name="email" placeholder="Email" />
+					<textarea name="message" placeholder="Message"></textarea>
+					<button>Send</button>
+				</form>
+				{% endif %}
 
 			</div>
 
