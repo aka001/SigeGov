@@ -68,8 +68,11 @@ def autocomplete(request):
 	})
 	return HttpResponse(the_data, content_type='application/json')
 
-def publications(request):
-	form = PublicationsSearchForm(request.GET)
+def publications(request,stateID):
+	if stateID:
+		form = PublicationsSearchForm(stateID)
+	else:
+		form = PublicationsSearchForm(request.GET)
 	publications = form.search()
 	context = {'publications':publications}
 	return render(request,'sigegov/publications.html',context)
@@ -110,6 +113,9 @@ def view_request(request,requestID):
 	context={'requestit':request_list}
 	return render(request,'blood/view_request.html',context)
 
+def view_statewise(request):
+	context = {}
+	return render(request,'sigegov/view_statewise.html',context)
 
 def enter_data(request):
 	"""Used for entering the data into the Publications database."""

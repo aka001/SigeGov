@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^view_publication/(?P<pubID>\S+)/$',views.view_publication,name='view_publication'),
     url(r'^process_upvote/(?P<pubID>\S+)/$',views.process_upvote,name='process_upvote'),
     url(r'^process_downvote/(?P<pubID>\S+)/$',views.process_downvote,name='process_downvote'),
+    url(r'^view_statewise/$',views.view_statewise,name='view_statewise'),
+    url(r'^publications/(?P<stateID>\S+)/$',views.publications,name='publications'),
 
     url(r'^enter_data/$',views.enter_data,name='enter_data'),
     url(r'^view_request_thanks/(?P<requestID>\S+)/$',views.view_request_thanks,name='view_request_thanks'),
@@ -51,7 +53,6 @@ urlpatterns = [
 	url(r'^about/$',views.about,name='about'),
 	url(r'^home/$',views.home,name='home'),
 	url(r'^todaycamp/$',views.todaycamp,name='todaycamp'),
-	url(r'^publications/$',views.publications,name='publications'),
 	url(r'^autocomplete/$',views.autocomplete,name='autocomplete'),
     url(r'^search/$',include('haystack.urls')),
 ]
