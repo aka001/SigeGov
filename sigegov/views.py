@@ -21,20 +21,48 @@ import logging
 emailil="bloodconnect14@gmail.com"
 
 def autocomplete(request):
-	key = request.GET.get('key')
+	project_title = request.GET.get('project_title')
+	state = request.GET.get('state')
+	category = request.GET.get('category')
+	department_name = request.GET.get('department_name')
+        logging.error(project_title)
+        logging.error(state)
+        logging.error(category)
+        logging.error(department_name)
+	#dat = request.GET.get('dat')
+        sqs = SearchQuerySet().autocomplete(project_title_auto=project_title, state_auto=state, category_auto=category, department_name_auto=department_name)
+        #sqs1 = SearchQuerySet().autocomplete(department_name_auto=department_name, category_auto= category)
+        #sqs1 = SearchQuerySet().autocomplete(project_title_auto=project_title)
+        suggestions = [(result.project_title, result.state, result.category, result.department_name) for result in sqs]
+        #suggestions1 = [(result.project_title, result.state) for result in sqs1]
 
-        if key == 'title':
-	        sqs = SearchQuerySet().autocomplete(project_auto=request.GET.get('q','asdfas'))
+        """sqs = SearchQuerySet().autocomplete(project_title_auto=project_title,
+                state_auto=state,
+         #       date_auto=dat,
+                category_auto=category,
+                department_name_auto=department_name)
+        suggestions = [(result.project_title, result.state, result.result.category, result.department_name) for result in sqs]"""
+        
+        """if key == 'title':
+	        sqs = SearchQuerySet().autocomplete(project_auto=request.GET.get('q','asdfas'),state_auto='Madhya')
 	        suggestions = [result.project_title for result in sqs]
-        elif key == 'state':
-	        sqs = SearchQuerySet().autocomplete(state_auto=request.GET.get('q','asdfas'))
-                for result in sqs:
-                        logging.error(dir(result))
-	        suggestions = [(str(result.state)+" "+str(result.project_title)) for result in sqs]
-        elif key == 'category':
+                logging.error(len(suggestions))
+        if key == 'state':
+                #sqs = SearchQuerySet().models(Publications)
+                #sqs.filter(document_id="2013-03")
+                #sqs1 = sqs.filter(state_auto = request.GET.get('q','asdf'))
+                #sqs2 = sqs.filter(project_auto = 'Gujarat')
+                #sqs = sqs1 | sqs2
+	        #sqs = SearchQuerySet().autocomplete(state_auto=request.GET.get('q','asdfas'))
+	        #sqs = SearchQuerySet().autocomplete(state_auto=request.GET.get('q','asdfas'))
+                #for result in sqs:
+                #        logging.error(dir(result))
+	        suggestions = [(result.project_title,result.state) for result in sqs]
+                logging.error(len(suggestions))
+        if key == 'category':
 	        sqs = SearchQuerySet().autocomplete(category_auto=request.GET.get('q','asdfas'))
-	        suggestions = [result.category for result in sqs]
-        #logging.error(suggestions)
+	        suggestions = [(result.project_title,result.category) for result in sqs]
+        #logging.error(suggestions)"""
 	the_data = json.dumps({
 	         'results': suggestions
 	})

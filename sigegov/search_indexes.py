@@ -9,11 +9,14 @@ class PublicationsIndex(indexes.SearchIndex, indexes.Indexable):
 	state = indexes.CharField(model_attr = 'state')
         category = indexes.CharField(model_attr = 'category')
 	project_title = indexes.CharField(model_attr = 'project_title')
+	department_name = indexes.CharField(model_attr = 'department_name')
+        #date = indexes.CharField(model_attr = 'date')
 	
-	project_auto = indexes.EdgeNgramField(model_attr='project_title')
+	project_title_auto = indexes.EdgeNgramField(model_attr='project_title')
+	department_name_auto = indexes.EdgeNgramField(model_attr='department_name')
 	state_auto = indexes.EdgeNgramField(model_attr='state')
+	#date_auto = indexes.EdgeNgramField(model_attr='date')
 	category_auto = indexes.EdgeNgramField(model_attr='category')
-        #content_auto = indexes.EdgeNgramField(document=True, use_template=True)
 
 	def get_model(self):
 		return Publications

@@ -14,19 +14,36 @@
 <h1>Autocomplete Example</h1>
 
 <form method="get" action="." class="autocomplete-me">
-<input type="text" id="id_q" name="q">
-   <select id="key">
-        <option value="title">Title</option>
-        <option value="category">Category</option>
-        <option value="state">State</option>
-  <input type="submit" value="Search!">
+<table>
+<!--tr>
+<td>Project Title</td>
+<td>State</td>
+<td>Department Name</td>
+<td>Category</td>
+</tr-->
+<thead>
+<th>
+<td>Project Title<br><input type="text" id="project_title" class="que"></td>
+<td>State<br><input type="text" id="state" class="que"></td>
+<td>Department Name<br><input type="text" id="department_name" class="que"></td>
+<td>Category<br><input type="text" id="category" class="que"></td>
+</th>
+</thead>
+</table>
+<table id="results">
+</table>
+<!--input type="text" id="id_q" name="date">
+<input type="submit" value="Search!">
+<input type="text" name="project_title"-->
 </form>
+
 {% for note in publications %}
 <h1>{{ note.document_id }}</h1>
 <p>
 {{ note.project_title }}
 </p>
 {% endfor %}
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
 // In a perfect world, this would be its own library file that got included
@@ -43,15 +60,14 @@ var Autocomplete = function(options) {
 
 Autocomplete.prototype.setup = function() {
 	var self = this
-		console.log(this.url);
+		console.log(this.url)
 		this.form_elem = $(this.form_selector)
-		this.query_box = this.form_elem.find('input[name=q]')
-                
+		this.query_box = this.form_elem.find('input[class=que]')
 		// Watch the input box.
 		this.query_box.on('keyup', function() {
 				var query = self.query_box.val()
-
-				if(query.length < self.minimum_length) {
+                        console.log(query);
+				if(query.length!=0 && query.length < self.minimum_length) {
 				return false
 				}
 
@@ -68,15 +84,19 @@ Autocomplete.prototype.setup = function() {
 
 Autocomplete.prototype.fetch = function(query) {
 	var self = this
-
-        var key = document.getElementById('key');
-        var val = key.options[key.selectedIndex].value;
-        console.log(val);
+        var department_name = document.getElementById('department_name').value
+        var project_title = document.getElementById('project_title').value
+        //var dat = document.getElementByName('date')
+        var state = document.getElementById('state').value
+        var category = document.getElementById('category').value
 	$.ajax({
                 url: this.url
                 , data: {
-                        'q': query,
-                        'key': val
+                        'department_name': department_name,
+                        'project_title': project_title,
+        //                'dat': dat,
+                        'state': state,
+                        'category': category
                 }
                 , success: function(data) {
                 self.show_results(data)
@@ -85,6 +105,33 @@ Autocomplete.prototype.fetch = function(query) {
 }
 
 Autocomplete.prototype.show_results = function(data) {
+        var results = data.results || [];
+        var table = document.getElementById("results")
+        $('#results tr').remove()
+        for(i=0; i<results.length; i++) {
+                console.log(results[i])
+        }
+
+        for(i=0; i<results.length; i++) {
+                var row = table.insertRow(0)
+                var project_title_cell = row.insertCell(0)
+                var state_cell = row.insertCell(1)
+                var department_name_cell = row.insertCell(2)
+                var category_cell = row.insertCell(3)
+                
+                project_title_cell.innerHTML = results[i][0]
+                state_cell.innerHTML = results[i][1]
+                department_name_cell.innerHTML = results[i][3]
+                category_cell.innerHTML = results[i][2]
+
+        }
+
+
+        //var row = table.insertRow()
+        /*for(var i=0; i<results.length; i++) {
+                console.log(results[i]) 
+        }*/
+/*Autocomplete.prototype.show_results = function(data) {
 	// Remove any existing results.
 	$('.ac-results').remove()
 
@@ -107,15 +154,15 @@ Autocomplete.prototype.show_results = function(data) {
 				results_wrapper.append(elem)
 		}
 
-	this.query_box.after(results_wrapper)
+	this.query_box.after(results_wrapper)*/
 }
 
 $(document).ready(function() {
-		window.autocomplete = new Autocomplete({
-form_selector: '.autocomplete-me'
+	window.autocomplete = new Autocomplete({
+                form_selector: '.autocomplete-me'
+        })
+	window.autocomplete.setup()
 })
-		window.autocomplete.setup()
-		})
 </script>
 </body>
 </html>
