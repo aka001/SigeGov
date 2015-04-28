@@ -1,8 +1,15 @@
+{% extends "sigegov/base.html" %}
 {% load i18n %}
 {% block content-body %}
-<a href="/sigegov/home">Go back</a> <br/><br/><br/>
 
-Name:  {{ user }}<br/>
-Email: {{ user.email }}
+<a href="/sigegov/home"><button class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span></a></button></a> 
 
+<br/>
+<table style="width:30%;margin:auto" class="table">
+<tr>
+<td>Name: </td><td> {{ user }}</td>
+</tr><tr>
+<td>Email: </td><td>{{ user.email }}</td>
+</tr>
+</table>
 {% endblock %}
