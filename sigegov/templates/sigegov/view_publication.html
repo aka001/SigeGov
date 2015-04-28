@@ -7,9 +7,9 @@
 {% load comments %}
 <!--<br/><br/><br/><br/><br/><br/><br/><br/><br/> -->
 
-<center><h1>{{ pub.project_title }} </h1></center><br/>
+<center><h1 data-step="3" data-intro="Title of the project" >{{ pub.project_title }} </h1></center><br/>
 
-<div style="float:left;">
+<div style="float:left;" data-step="4" data-intro="Use this button to show your appreciation for a project. Click again to take back." >
 <br/>
 <!--<p>{{ count }} upvotes </p-->
 {% ifequal flag 1 %}
@@ -79,10 +79,10 @@ $(document).ready(function(){
             <div class="panel-heading">
                 <h3 class="panel-title">Project Details</h3>
                 <div class="pull-right">
-                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter </button>
+                    <button  data-step="5" data-intro="Use this button to filter out results"  class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter </button>
                 </div>
             </div>
-            <table class="table">
+            <table class="table" data-step="6" data-intro="This table shows all the details for a project." >
                 <thead>
                     <tr class="filters">
                         <th><input type="text" class="form-control" placeholder="Name" disabled></th>
@@ -274,6 +274,11 @@ $(document).ready(function(){
     <td >State</td>
     <td >{{pub.state}}</td>
   </tr>
+  <tr>
+    <td >Publication Pdf</td>
+    <td><a href="/sigegov/pdfopen/{{pubID}}">File</a></td>
+  </tr>
+
                 </tbody>
             </table>
         </div>
@@ -316,30 +321,31 @@ $(document).ready(function(){
 
 --> 
 <hr/>
-
-<h4>{{ comment_count }} comments have been posted.</h4>
+<div data-step="7" data-intro="This section shows comments(total and individual) on this project by all users along with their timestamp.">
+<h4 >{{ comment_count }} comments have been posted.</h4>
 
 {% get_comment_list for pub as comment_list %}
 {% for comment in comment_list %}
-<div class="comment-cl">
+<div  class="comment-cl">
 <i> Posted by: <b>{{ comment.user_name }}</b> on {{ comment.submit_date }}</p> </i>
 
 <p>  {{ comment.comment }}</p>
 </div>
 <br/>
 {% endfor %}
+</div>
 <hr/>
 <h4>Post a comment !</h4>
 {% get_comment_form for pub as form %}
-<table style="width:100%;">
-  <form action="{% comment_form_target %}" method="post">
+<table style="width:100%;" data-step="8" data-intro="Post a comment by adding your name and comment and click on Post to publish it">
+  <form  action="{% comment_form_target %}" method="post">
     {% csrf_token %}
     {{ form.content_type }}
     {{ form.object_pk }}
     {{ form.timestamp }}
     {{ form.security_hash }}
-    <tr>
-    <td><h4>Name</h4></td> <td style="padding-left:15px">   {{ form.name    }} </td><br/>
+    <tr >
+    <td ><h4>Name</h4></td> <td style="padding-left:15px">   {{ form.name    }} </td><br/>
     </tr><tr><td><h4>Comment</h4> </td><td style="padding-left:15px"> {{ form.comment }}</td>
     </tr>
     <input type="hidden" name="next" value="/sigegov/view_publication/{{pub.id}}" />
@@ -347,8 +353,7 @@ $(document).ready(function(){
     <td>
     </td>
       <td style="padding-left:15px">
-        <input class="btn btn-success" type="submit" name="submit" value="Post">
-        <input class="btn btn-primary" type="submit" name="preview" value="Preview">
+        <input class="btn btn-default" type="submit" name="submit" value="Post">
       </td>
     </tr>
   </form>

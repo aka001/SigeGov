@@ -15,7 +15,6 @@ from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
 from django.shortcuts import redirect
 from django.db.models import Q
-
 import csv
 import logging
 
@@ -33,7 +32,7 @@ def autocomplete(request):
 	else:
 		#logging.error(search_text)
 		sqs = SearchQuerySet()#.autocomplete(text=search_text)
-		
+	logging.error(sqs[0].id)
         #sqs1 = SearchQuerySet().autocomplete(department_name_auto=department_name, category_auto= category)
         #sqs1 = SearchQuerySet().autocomplete(project_title_auto=project_title)
         suggestions = [(result.project_title, result.state, result.category, result.department_name, (result.id).split('.')[2]) for result in sqs]
@@ -114,6 +113,17 @@ def create_event(request):
 	context = {'form': form}
 	return render(request, 'sigegov/create_event.html',context)
 
+def pdfopen(request, pdf_id=None):
+    pub = Publications.objects.get(id=pdf_id)
+    if pub.attachment:
+	    with open(str(pub.attachment), 'rb') as pdf:
+		response = HttpResponse(pdf.read(),content_type='application/pdf')
+		response['Content-Disposition'] = 'filename=some_file.pdf'
+		return response
+	    pdf.closed
+    context = {}
+    return render(request, 'sigegov/pdfopen.html',context)
+
 def download(request, file_name=None):
     logging.error(file_name)
     with open('./'+file_name, 'rb') as pdf:
@@ -140,18 +150,18 @@ def view_publication(request, pubID):
 	count = len(count)
 	for field in pub._meta.fields:
 		print field.name
-	context = {'pub': pub, 'flag': flag, 'count': count, 'current_path': current_path}
+	context = {'pub': pub, 'flag': flag, 'count': count, 'current_path': current_path, 'pubID': pubID}
 	return render(request, 'sigegov/view_publication.html',context)
 
 def compare_publications(request, pubId_list):
         pubsIds = pubId_list.split(',')
         logging.error(pubsIds)
         pubs = []
+        i=0
         for i in pubsIds:
                 pubs.append(Publications.objects.get(id=i))
-        logging.error(pubs)
 
-	context = {'pubs': pubs}
+	context = {'pubs': pubs, 'i':i}
 	return render(request, 'sigegov/compare_publications.html',context)
 
 @login_required
