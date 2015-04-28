@@ -4,23 +4,24 @@
 </form>
 
 -->
+{% extends "sigegov/base.html" %}
+
+{% load i18n %}
+{% block content-body %}
 <!DOCTYPE html>
-<html>
+<!-- <html>
 <head>
+<style>
+	body { font-size: 140%; }
+</style>
 <meta charset="utf-8">
 <title>Autocomplete Example</title>
 </head>
-<body>
+<body> -->
 <h1>Autocomplete Example</h1>
 
 <form method="get" action="." class="autocomplete-me">
 <table>
-<!--tr>
-<td>Project Title</td>
-<td>State</td>
-<td>Department Name</td>
-<td>Category</td>
-</tr-->
 <thead>
 <th>
 <td>Project Title<br><input type="text" id="project_title" class="que"></td>
@@ -30,22 +31,26 @@
 </th>
 </thead>
 </table>
-<table id="results">
+
+<table id="example" class="table table-striped table-bordered" cellspacing="0" cellpadding="0" width="100%">
 </table>
 <!--input type="text" id="id_q" name="date">
 <input type="submit" value="Search!">
 <input type="text" name="project_title"-->
 </form>
 
-{% for note in publications %}
+<!-- {% for note in publications %}
 <h1>{{ note.document_id }}</h1>
 <p>
 {{ note.project_title }}
 </p>
-{% endfor %}
+{% endfor %} -->
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
 <script type="text/javascript">
+$(document).ready(function() {
+    //$('#example').dataTable();
+} );
 // In a perfect world, this would be its own library file that got included
 // on the page and only the ``$(document).ready(...)`` below would be present.
 // But this is an example.
@@ -106,12 +111,11 @@ Autocomplete.prototype.fetch = function(query) {
 
 Autocomplete.prototype.show_results = function(data) {
         var results = data.results || [];
-        var table = document.getElementById("results")
-        $('#results tr').remove()
+        var table = document.getElementById("example")
+        $('#example tr').remove()
         for(i=0; i<results.length; i++) {
                 console.log(results[i])
         }
-
         for(i=0; i<results.length; i++) {
                 var row = table.insertRow(0)
                 var project_title_cell = row.insertCell(0)
@@ -123,10 +127,7 @@ Autocomplete.prototype.show_results = function(data) {
                 state_cell.innerHTML = results[i][1]
                 department_name_cell.innerHTML = results[i][3]
                 category_cell.innerHTML = results[i][2]
-
         }
-
-
         //var row = table.insertRow()
         /*for(var i=0; i<results.length; i++) {
                 console.log(results[i]) 
@@ -164,5 +165,6 @@ $(document).ready(function() {
 	window.autocomplete.setup()
 })
 </script>
-</body>
-</html>
+<!-- </body>
+</html> -->
+{% endblock %}
