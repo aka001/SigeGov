@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "sigegov/base.html" %}
 {% load i18n %}
 
-{% block content %}
+{% block content-body %}
 <form method="post" action=".">
   {% csrf_token %}
   {{ form.as_p }}

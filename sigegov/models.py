@@ -13,6 +13,11 @@ class UserProfile(models.Model):
 #url = models.URLField()
 #home_address = models.TextField()
 
+class Event(models.Model):
+	event=models.TextField()
+	organiser=models.TextField()
+	attachment = models.FileField(upload_to='%Y/%m/%d',blank=True)
+
 class Publications(models.Model):
 	votes = VotableManager()
 	document_id = models.TextField()
