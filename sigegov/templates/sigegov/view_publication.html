@@ -5,6 +5,7 @@
 {% block content-body %}
 {% load comments %}
 <!--<br/><br/><br/><br/><br/><br/><br/><br/><br/> -->
+
 <center><h1>{{ pub.project_title }} </h1></center><br/>
 
 <div style="float:left;">
@@ -23,6 +24,27 @@
 </div>
 <!-- TABLE CONTENTS -->
 <script type = "text/javascript">
+// Instance the tour
+var tour = new Tour({
+  steps: [
+  {
+    element: "#my-element",
+    title: "Title of my step",
+    content: "Content of my step"
+  },
+  {
+    element: "#my-other-element",
+    title: "Title of my step",
+    content: "Content of my step"
+  }
+]});
+
+// Initialize the tour
+tour.init();
+
+// Start the tour
+tour.start();
+
 /*
 Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
 */
