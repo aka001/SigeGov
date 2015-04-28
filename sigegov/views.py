@@ -90,6 +90,10 @@ def members(request):
 	context = {'members':accepted_user_list}
 	return render(request,'sigegov/members.html',context)
 
+def executive_committee(request):
+	context = {'i': 1}
+	return reender(request, 'sigegov/executive_committee.html', context)
+
 def create_event(request):
 	if request.method=='POST':
 		form=UploadEventForm(request.POST, request.FILES)

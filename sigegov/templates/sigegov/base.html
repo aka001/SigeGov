@@ -179,13 +179,18 @@ textarea:focus {
         
 				<a href="#">Objectives</a>
 				<a href="#">Executive Commitee</a>
-				<a href="#">Publications</a>
-				<a href="#" class="selected">Members</a>
+				<a href="/sigegov/publications/">Publications</a>
+				<a href="/sigegov/members" class="selected">Members</a>
 				<a href="#">Awards</a>
-				<a href="#">Events</a>
+				<a href="/sigegov/show_event/">Events</a>
 			</nav>
-
+			{% if user %}
+				{% if user.is_anonymous %}
+					<a href="/accounts/login/" class="logout-button">Hi {{ user }} | Login <span class="glyphicon glyphicon-off" ></span></a>
+				{% else %}
 			<a href="/accounts/logout/" class="logout-button">Hi {{ user }} | Logout <span class="glyphicon glyphicon-off" ></span></a>
+				{% endif %}
+			{% endif %}
 		</div>
 		<br/>
 		<br/>
