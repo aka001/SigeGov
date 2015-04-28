@@ -12,10 +12,11 @@ urlpatterns = [
     url(r'^process_downvote/(?P<pubID>\S+)/$',views.process_downvote,name='process_downvote'),
     url(r'^view_statewise/$',views.view_statewise,name='view_statewise'),
     url(r'^publications/$',views.publications,name='publications'),
-    url(r'^publications/(?P<stateID>\S+)/$',views.publications,name='publications'),
+    url(r'^publications/(?P<stateID>[\S\ ]+)/$',views.publications,name='publications'),
     url(r'^send_email_sigegov/(?P<page_path>\S+)/$',views.send_email_sigegov,name='send_email_sigegov'),
     url(r'^enter_data/$',views.enter_data,name='enter_data'),
     url(r'^create_event/$',views.create_event,name='create_event'),
+    url(r'^compare_publications/(?P<pubId_list>\S+)/$',views.compare_publications,name='compare_publications'),
 
     url(r'^view_request_thanks/(?P<requestID>\S+)/$',views.view_request_thanks,name='view_request_thanks'),
     url(r'^view_request/(?P<requestID>\S+)/$',views.view_request,name='view_request'),
