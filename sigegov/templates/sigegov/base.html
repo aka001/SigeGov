@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html>
 
 <head>
@@ -196,8 +197,7 @@ box-shadow: 0px 11px 31px 1px rgba(125,177,179,0.82);
 
 				<p>Contact Us</p>
 
-				<form action="#" method="post">
-
+				<form action="/sigegov/send_email_sigegov/{{current_path}}/" role="form" method="post">{% csrf_token %}
 					<input type="text" name="email" placeholder="Email" />
 					<textarea name="message" placeholder="Message"></textarea>
 					<button>Send</button>
@@ -207,12 +207,4 @@ box-shadow: 0px 11px 31px 1px rgba(125,177,179,0.82);
 			</div>
 
 </footer>
-
-
-<!-- Demo ads. Please ignore and remove. -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="http://cdn.tutorialzine.com/misc/enhance/v3.js" async></script>
-
-
-
 </html>
