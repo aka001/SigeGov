@@ -301,23 +301,27 @@ def view_story(request,story_id):
 @login_required
 def home(request):
 	username = request.user.username
+	is_superuser=request.user.is_superuser
 	flag=0
 	context={'flag': flag}
-	if(username=='admin'):
+	if(is_superuser):
 		flag=1
 		pending_user_list1=UserProfile.objects.filter(status=0)
 		accepted_user_list1=UserProfile.objects.filter(status=1)
 		pending_user_list=[]
 		accepted_user_list=[]
 		for user in pending_user_list1:
+			if(user.user.username=='admin'):
+				continue
 			calc=user.user_id
 			userit=User.objects.get(id=calc)
 			pending_user_list.append(userit)
 		for user in accepted_user_list1:
+			if(user.user.username=='admin'):
+				continue
 			calc=user.user_id
 			userit=User.objects.get(id=calc)
 			accepted_user_list.append(userit)
-		print len(pending_user_list), len(accepted_user_list)
 		context = {'pending_user_list': pending_user_list, 'accepted_user_list': accepted_user_list, 'flag': flag}
 	else:
 		user=UserProfile.objects.get(user_id=request.user.id)
