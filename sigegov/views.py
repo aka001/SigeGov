@@ -8,7 +8,7 @@ import datetime
 from datetime import datetime as dt
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
-from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications, UserProfile
+from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications, UserProfile, Event
 from vote.managers import Vote
 from sigegov.forms import PublicationsSearchForm
 from django.contrib.auth.decorators import login_required
@@ -79,6 +79,19 @@ def publications(request,stateID=None):
 	publications = form.search()
 	context = {'publications':publications,'state':stateID}
 	return render(request,'sigegov/publications.html',context)
+
+def create_event(request):
+	context = {'publications': 1}
+	if request.method=='POST':
+		form=Event()
+		form.event=request.POST['event']
+		form.organiser=request.POST['organiser']
+		print request.POST
+		form.attachment=request.POST['attachment']
+		form.save()
+	else:
+		form=Event()
+	return render(request, 'sigegov/create_event.html',context)
 
 def view_publication(request, pubID):
 	current_path=request.get_full_path()
