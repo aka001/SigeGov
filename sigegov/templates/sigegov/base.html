@@ -13,16 +13,25 @@
 	<link rel="stylesheet" href="/static/assets/header-second-bar.css">
 	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.css">
 	<!--<link rel="stylesheet" href="/static/assets/demo2.css">-->	
 	<link rel="stylesheet" href="/static/assets/footerX.css">
 
 	<link rel="stylesheet" href="/static/css/bootstrap.css">
 	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script-->
 	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
+	<script src="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+	<!--script src="//code.jquery.com/jquery-2.1.3.min.js"></script-->
 	<script src="/static/js/bootstrap.min.js"></script>
 	<script src="/static/js/bootstrap.js"></script>
 	<style>
-	.filterable {
+
+.filterable {
     margin-top: 15px;
 }
 .filterable .panel-heading .pull-right {
@@ -51,6 +60,21 @@
 -moz-box-shadow: 0px 11px 31px 1px rgba(125,177,179,0.82);
 box-shadow: 0px 11px 31px 1px rgba(125,177,179,0.82);
 }
+textarea {
+    width: 900px;
+    height: 10em;
+    border-radius: 1em;
+    /*border: 1px solid #000; /* everything up to and including this line
+                               are aesthetics, adjust to taste */
+    outline: none; /* removes the default outline */
+    resize: none; /* prevents the user-resizing, adjust to taste */
+}
+
+textarea:focus {
+    box-shadow: inset 0 0 3px 2px rgba(125,177,179,0.82);; /* provides a more style-able
+                                           replacement to the outline */
+}​
+
 	</style>
 	<!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 

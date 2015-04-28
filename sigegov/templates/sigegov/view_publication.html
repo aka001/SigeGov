@@ -323,7 +323,7 @@ $(document).ready(function(){
 {% endfor %}
 
 {% get_comment_form for pub as form %}
-<table class="table">
+<table border="2">
   <form action="{% comment_form_target %}" method="post">
     {% csrf_token %}
     {{ form.content_type }}
@@ -331,10 +331,11 @@ $(document).ready(function(){
     {{ form.timestamp }}
     {{ form.security_hash }}<table>
     <tr>
-    <td>Name:</td> <td>   {{ form.name    }} </td><br/>
-    </tr><tr><td>Comment </td><td > {{ form.comment }}</td>
+    <td>Name:</td> <td>   {{ form.name    }} </td>
     </tr>
-    </table> <br/>
+    <tr><td>Comment </td><td > {{ form.comment }}</td>
+    </tr>
+   <br/>
     <input type="hidden" name="next" value="/sigegov/view_publication/{{pub.id}}" />
     <tr>
       <td colspan="2">
