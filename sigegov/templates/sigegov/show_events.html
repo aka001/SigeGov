@@ -1,0 +1,9 @@
+{% extends "sigegov/base.html" %}
+{% load i18n %}
+{% block content-body %}
+{% for i in events %}
+	{{i.event}}
+	{{i.organiser}}
+	<a target="blank" href="/sigegov/download/{{i.attachment}}">File</a>
+{% endfor %}
+{% endblock %}

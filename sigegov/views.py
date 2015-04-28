@@ -10,11 +10,12 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from sigegov.models import Choice, Question, Donor, Recepient, Hospital, Camp, Link, Post, Story,Notification, User, Publications, UserProfile, Event
 from vote.managers import Vote
-from sigegov.forms import PublicationsSearchForm
+from sigegov.forms import PublicationsSearchForm, UploadEventForm
 from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
 from django.shortcuts import redirect
 from django.db.models import Q
+from filetransfers.api import serve_file
 import csv
 import logging
 
@@ -80,18 +81,43 @@ def publications(request,stateID=None):
 	context = {'publications':publications,'state':stateID}
 	return render(request,'sigegov/publications.html',context)
 
+def handle_uploaded_file(f):
+	with open('some/file/name.txt', 'wb+') as destination:
+	 for chunk in f.chunks():
+		destination.write(chunk)
+
 def create_event(request):
-	context = {'publications': 1}
 	if request.method=='POST':
-		form=Event()
-		form.event=request.POST['event']
-		form.organiser=request.POST['organiser']
-		print request.POST
-		form.attachment=request.POST['attachment']
-		form.save()
+		form=UploadEventForm(request.POST, request.FILES)
+		if form.is_valid():
+			event = form.cleaned_data['event']
+			organiser = form.cleaned_data['organiser']
+			attachment = form.cleaned_data['attachment']
+			#handle_uploaded_file(request.FILES['file'])
+			#form.event=request.POST['event']
+			#form.organiser=request.POST['organiser']
+			#print request.POST
+			#form.attachment=request.POST['attachment']
+			instance = Event(organiser=organiser,event=event,attachment=attachment)
+			instance.save()
+			return HttpResponseRedirect('/sigegov/')
 	else:
-		form=Event()
+		form=UploadEventForm()
+	context = {'form': form}
 	return render(request, 'sigegov/create_event.html',context)
+
+def download(request, file_name=None):
+    logging.error(file_name)
+    with open('./'+file_name, 'rb') as pdf:
+	response = HttpResponse(pdf.read(),content_type='application/pdf')
+	response['Content-Disposition'] = 'filename=some_file.pdf'
+	return response
+    pdf.closed
+
+def show_event(request):
+	events = Event.objects.all()
+	context = {'events': events}
+	return render(request, 'sigegov/show_events.html',context)
 
 def view_publication(request, pubID):
 	current_path=request.get_full_path()
