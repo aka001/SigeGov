@@ -40,4 +40,3 @@ class PublicationsIndex(indexes.SearchIndex, indexes.Indexable):
 			return data 
 		else:
 			return data
-	
