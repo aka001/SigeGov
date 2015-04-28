@@ -142,11 +142,11 @@ def compare_publications(request, pubId_list):
         pubsIds = pubId_list.split(',')
         logging.error(pubsIds)
         pubs = []
+        i=0
         for i in pubsIds:
                 pubs.append(Publications.objects.get(id=i))
-        logging.error(pubs)
 
-	context = {'pubs': pubs}
+	context = {'pubs': pubs, 'i':i}
 	return render(request, 'sigegov/compare_publications.html',context)
 
 @login_required
