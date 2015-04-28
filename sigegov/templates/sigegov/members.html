@@ -2,7 +2,37 @@
 {% load i18n %}
 {% block title %}Members{% endblock %}
 {% block content-body %}
+
+<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$('#example').dataTable();
+			} );
+		</script>
+
+		<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>                
+            </tr>
+        </thead>
+ 
+        <tfoot>
+            <tr>
+                  <th>Username</th>
+                <th>Email</th>
+            </tr>
+        </tfoot>
+ 
+        <tbody>
+           
 {% for i in members %}
-{{i.email}}<br/><br/>
+		<tr>
+			<th>{{i}}</th>
+			<th>{{i.email}}</th>
+		</tr>
 {% endfor %}
+
+</tbody>
+</table>
 {% endblock %}

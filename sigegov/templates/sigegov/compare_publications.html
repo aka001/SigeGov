@@ -4,22 +4,36 @@
 {% block content-body %}
 {% load comments %}
 <!--<br/><br/><br/><br/><br/><br/><br/><br/><br/> -->
-<!--<center><h1>{{ pub.project_title }} </h1></center><br/>
+<!--<center><h1>{{ pubs1.project_title }} </h1></center><br/>
 
 <div style="float:left;">
 <br/>
 <! <p>{{ count }} upvotes </p
 {% ifequal flag 1 %}
-<a href="/sigegov/process_downvote/{{ pub.id }}"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-arrow-up"></span></button></a>
+<a href="/sigegov/process_downvote/{{ pubs1.id }}"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-arrow-up"></span></button></a>
 {% endifequal %}
 {% ifequal flag 0 %}
-<a href="/sigegov/process_upvote/{{pub.id}}">
+<a href="/sigegov/process_upvote/{{pubs1.id}}">
 <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-up"></span></button>
 </a>
 {% endifequal %} 
 <br/>
 <button class="btn btn-primary" style="width:91%;"><span style="text-align:center;"><h4>{{ count }}</h4></span></button>
 </div-->
+<head>
+<style>
+#tab2 td:first-child{
+  font-weight: bold;
+  width:20%;
+}
+
+#tab2 td:last-child{
+width:40%;
+}
+
+</style>
+</head>
+
 <!-- TABLE CONTENTS -->
 <script type = "text/javascript">
 
@@ -69,12 +83,10 @@ $(document).ready(function(){
     });
 });
 </script>
-<table >
-<tr>
 
     <!--<div style="margin: auto;width:75%;float:center;" id="ContentTable">--> 
     
-    <td>
+    
     
         <div class="panel panel-primary filterable">
             <div class="panel-heading">
@@ -83,205 +95,260 @@ $(document).ready(function(){
                     <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter </button>
                 </div>
             </div>
-            <table class="table">
+            <table class="table" id="tab2">
                 <thead>
                     <tr class="filters">
                         <th><input type="text" class="form-control" placeholder="Name" disabled></th>
-                        <th><input type="text" class="form-control" placeholder="Description" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Description 1" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Description 2" disabled></th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td> Project Title </td>
-                        <td> {{ pub.project_title }} </td>
+                        <td> {{ pubs1.project_title }} </td>
+                        <td> {{ pubs2.project_title }} </td>
                     </tr>
 
   <tr>  
     <td >Document Id</td>
-    <td >{{ pubs[i].document_id }}</td>
-    <td >{{ pubs[i+1].document_id }}</td>
+    <td >{{ pubs1.document_id }}</td>
+    <td >{{ pubs2.document_id }}</td>
     
+
   </tr>
-  <tr>
+
+    <tr>
     <td >Department Name</td>
-    <td >{{pub.department_name}}</td>
+    <td >{{pubs1.department_name}}</td>
+    <td >{{pubs2.department_name}}</td>
   </tr>
   <tr>
     <td >Name </td>
-    <td >{{pub.name_1}}</td>
+    <td >{{pubs1.name_1}}</td>
+    <td >{{pubs2.name_1}}</td>
+ 
   </tr>
   <tr>
     <td >Designation</td>
-    <td >{{pub.designation_1}}</td>
+    <td >{{pubs1.designation_1}}</td>
+  <td >{{pubs2.designation_1}}</td>
+  
   </tr>
   <tr>
     <td >Email</td>
-    <td >{{pub.email_1}}</td>
+    <td >{{pubs1.email_1}}</td>
+     <td >{{pubs2.email_1}}</td>
+
   </tr>
   <tr>
     <td >Address</td>
-    <td >{{pub.address_1}}</td>
+    <td >{{pubs1.address_1}}</td>
+    <td >{{pubs2.address_1}}</td>
+  
   </tr>
   <tr>
     <td >Phone</td>
-    <td >{{pub.phone_1}}</td>
+    <td >{{pubs1.phone_1}}</td>
+    <td >{{pubs2.phone_1}}</td>
+  
   </tr>
   <tr>
     <td >Fax</td>
-    <td >{{pub.fax_1}}</td>
+    <td >{{pubs1.fax_1}}</td>
+    <td >{{pubs2.fax_1}}</td>
   </tr>
   <tr>
     <td >Mobile</td>
-    <td >{{pub.mobile_1}}</td>
+    <td >{{pubs1.mobile_1}}</td>
+    <td >{{pubs2.mobile_1}}</td>
   </tr>
   <tr>
     <td >Name </td>
-    <td >{{pub.name_2}}</td>
+    <td >{{pubs1.name_2}}</td>
+    <td >{{pubs2.name_2}}</td>
   </tr>
   <tr>
     <td >Designation</td>
-    <td >{{pub.designation_2}}</td>
+    <td >{{pubs1.designation_2}}</td>
+    <td >{{pubs2.designation_2}}</td>
   </tr>
   <tr>
     <td >Email</td>
-    <td >{{pub.email_2}}</td>
+    <td >{{pubs1.email_2}}</td>
+    <td >{{pubs2.email_2}}</td>
   </tr>
   <tr>
     <td >Address</td>
-    <td >{{pub.address_2}}</td>
+    <td >{{pubs1.address_2}}</td>
+    <td >{{pubs2.address_2}}</td>
   </tr>
   <tr>
     <td >Phone</td>
-    <td >{{pub.phone_2}}</td>
+    <td >{{pubs1.phone_2}}</td>
+    <td >{{pubs2.phone_2}}</td>
   </tr>
   <tr>
     <td >Fax</td>
-    <td >{{pub.fax_2}}</td>
+    <td >{{pubs1.fax_2}}</td>
+    <td >{{pubs2.fax_2}}</td>
   </tr>
   <tr>
     <td >Mobile</td>
-    <td >{{pub.mobile_2}}</td>
+    <td >{{pubs1.mobile_2}}</td>
+    <td >{{pubs2.mobile_2}}</td>
   </tr>
   <tr>
     <td >Category</td>
-    <td >{{pub.category}}</td>
+    <td >{{pubs1.category}}</td>
+    <td >{{pubs2.category}}</td>
   </tr>
   <tr>
     <td >Nature</td>
-    <td >{{pub.nature}}</td>
+    <td >{{pubs1.nature}}</td>
+    <td >{{pubs2.nature}}</td>
   </tr>
   <tr>
     <td >Description</td>
-    <td >{{pub.description}}</td>
+    <td >{{pubs1.description}}</td>
+    <td >{{pubs2.description}}</td>
   </tr>
   <tr>
     <td >Date</td>
-    <td >{{pub.date}}</td>
+    <td >{{pubs1.date}}</td>
+    <td >{{pubs2.date}}</td>
   </tr>
   <tr>
     <td >URL</td>
-    <td ><a style="color:blue;" href={{pub.url}}>{{pub.url}}</a></td>
+    <td ><a style="color:blue;" href={{pubs1.url}}>{{pubs1.url}}</a></td>
+    <td ><a style="color:blue;" href={{pubs2.url}}>{{pubs2.url}}</a></td>
   </tr>
   <tr>
     <td >Business Model</td>
-    <td >{{pub.business_model}}</td>
+    <td >{{pubs1.business_model}}</td>
+    <td >{{pubs2.business_model}}</td>
   </tr>
   <tr>
     <td >No. of Process</td>
-    <td >{{pub.no_process}}</td>
+    <td >{{pubs1.no_process}}</td>
+    <td >{{pubs2.no_process}}</td>
   </tr>
   <tr>
     <td >Beneficiary 1</td>
-    <td >{{pub.beneficiary_1}}</td>
+    <td >{{pubs1.beneficiary_1}}</td>
+    <td >{{pubs2.beneficiary_1}}</td>
   </tr>
   <tr>
     <td >Beneficiary 2</td>
-    <td >{{pub.beneficiary_2}}</td>
+    <td >{{pubs1.beneficiary_2}}</td>
+    <td >{{pubs2.beneficiary_2}}</td>
   </tr>
   <tr>
     <td >Beneficiary 3</td>
-    <td >{{pub.beneficiary_3}}</td>
+    <td >{{pubs1.beneficiary_3}}</td>
+    <td >{{pubs2.beneficiary_3}}</td>
   </tr>
   <tr>
     <td >Transaction</td>
-    <td >{{pub.transaction}}</td>
+    <td >{{pubs1.transaction}}</td>
+    <td >{{pubs2.transaction}}</td>
   </tr>
   <tr>
     <td >Benefit 1</td>
-    <td >{{pub.benefit_1}}</td>
+    <td >{{pubs1.benefit_1}}</td>
+    <td >{{pubs2.benefit_1}}</td>
   </tr>
   <tr>
     <td >Benefit 2</td>
-    <td >{{pub.benefit_2}}</td>
+    <td >{{pubs1.benefit_2}}</td>
+    <td >{{pubs2.benefit_2}}</td>
+
   </tr>
   <tr>
     <td >Benefit 3</td>
-    <td >{{pub.benefit_3}}</td>
+    <td >{{pubs1.benefit_3}}</td>
+    <td >{{pubs2.benefit_3}}</td>
   </tr>
   <tr>
     <td >Process 1</td>
-    <td >{{pub.process_1}}</td>
+    <td >{{pubs1.process_1}}</td>
+    <td >{{pubs2.process_1}}</td>
   </tr>
   <tr>
     <td >Process 2</td>
-    <td >{{pub.process_2}}</td>
+    <td >{{pubs1.process_2}}</td>
+    <td >{{pubs2.process_2}}</td>
   </tr>
   <tr>
     <td >Database</td>
-    <td >{{pub.database}}</td>
+    <td >{{pubs1.database}}</td>
+    <td >{{pubs2.database}}</td>
   </tr>
   <tr>
     <td >OS</td>
-    <td >{{pub.operating}}</td>
+    <td >{{pubs1.operating}}</td>
+    <td >{{pubs2.operating}}</td>
   </tr>
   <tr>
     <td >Web Server</td>
-    <td >{{pub.web_server}}</td>
+    <td >{{pubs1.web_server}}</td>
+    <td >{{pubs2.web_server}}</td>
   </tr>
   <tr>
     <td >Prime Agency</td>
-    <td >{{pub.prime_agency}}</td>
+    <td >{{pubs1.prime_agency}}</td>
+    <td >{{pubs2.prime_agency}}</td>
   </tr>
   <tr>
     <td >Network Arrangement</td>
-    <td >{{pub.network_arrangement}}</td>
+    <td >{{pubs1.network_arrangement}}</td>
+    <td >{{pubs2.network_arrangement}}</td>
   </tr>
   <tr>
     <td >Datacenter</td>
-    <td >{{pub.datacenter}}</td>
+    <td >{{pubs1.datacenter}}</td>
+    <td >{{pubs2.datacenter}}</td>
   </tr>
   <tr>
     <td >CSC</td>
-    <td >{{pub.csc}}</td>
+    <td >{{pubs1.csc}}</td>
+    <td >{{pubs2.csc}}</td>
   </tr>
   <tr>
     <td >Formal Document</td>
-    <td >{{pub.formal_document}}</td>
+    <td >{{pubs1.formal_document}}</td>
+    <td >{{pubs2.formal_document}}</td>
   </tr>
   <tr>
     <td >Implementation</td>
-    <td >{{pub.implementation}}</td>
+    <td >{{pubs1.implementation}}</td>
+    <td >{{pubs2.implementation}}</td>
   </tr>
   <tr>
     <td >Training Program</td>
-    <td >{{pub.no_training}}</td>
+    <td >{{pubs1.no_training}}</td>
+    <td >{{pubs2.no_training}}</td>
   </tr>
   <tr>
     <td >Sector</td>
-    <td >{{pub.sector}}</td>
+    <td >{{pubs1.sector}}</td>
+    <td >{{pubs2.sector}}</td>
   </tr>
   <tr>
     <td >Sub Sector</td>
-    <td >{{pub.sub_sector}}</td>
+    <td >{{pubs1.sub_sector}}</td>
+    <td >{{pubs2.sub_sector}}</td>
   </tr>
   <tr>
     <td >State</td>
-    <td >{{pub.state}}</td>
+    <td >{{pubs1.state}}</td>
+    <td >{{pubs2.state}}</td>
   </tr>
+  
+  
                 </tbody>
             </table>
         </div>
-    </td>
-  {% endfor %}
-  </tr></table>
 <!--TABLE CONTENT END -->
 {% endblock %}
+  
