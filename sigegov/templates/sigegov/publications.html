@@ -33,13 +33,19 @@
 </th>
 </thead>
 </table-->
-<a class="btn btn-primary" onclick="checkbox_func()">Compare</a><br><br>
+<a data-step="3" data-intro="Select any two projects from respective checkboxes in table and click this button to compare between them." class="btn btn-primary" onclick="checkbox_func()">Compare</a><br><br>
+<nav style="float:right;">
+    <ul class="pagination">
+    </ul>
+</nav>
+<div data-step="4" data-intro="This is the master search. Start typying your search and results will be displayed in the table below. Results include any matching results from all PDF records" >
 <label>Search in PDF</label>
-<input type="text" id="search_text" class="que">
+<input dtype="text" id="search_text" class="que">
+</div>
 <br/>
 <br/>
-<table id="example" class="table table-bordered table-hover" cellspacing="0" cellpadding="0" width="100%">
-<thead>
+<table  id="example" class="table table-bordered table-hover" cellspacing="0" cellpadding="0" width="100%">
+<thead >
 <th>Select</th>
 <th>Project Title<br><input type="text" id="project_title" class="que" autofocus="autofocus"></th>
 {% if state %}
@@ -52,7 +58,7 @@
 <th>Category<br><input type="text" id="category" class="que"></th>
 <th>Pdf</th>
 </thead>
-<tbody>
+<tbody data-step="5" data-intro="This section allows multi-index search simultaneously. Query results quickly. For example - All Govt-to-Citizen projects.Your search results are be displayed in this table">
 </tbody>
 </table>
 </form>
@@ -147,11 +153,68 @@ $(document).ready(function($) {
         });
 });
 
+var results = [];
+var psize = 15;
+var plen = 5;
+var pages;
+var p = 0;
+
+function changePage(pno) {
+    var table = document.getElementById('example').getElementsByTagName('tbody')[0];// > tbody")
+    $('#example tbody tr').remove()
+
+    for(i=psize*pno; i<psize*(pno+1); i++) {
+            var pubId = results[i][4];
+            var row = table.insertRow(table.rows.length);
+            row.id = pubId;
+            row.className = 'row3';
+            var checkbox = row.insertCell(0);
+            var project_title_cell = row.insertCell(1);
+            var state_cell = row.insertCell(2);
+            var department_name_cell = row.insertCell(3);
+            var category_cell = row.insertCell(4);
+            var pdf_cell = row.insertCell(5);
+
+            pdf_cell.innerHTML = "<a href='/sigegov/pdfopen/"+  pubId + "'>File</a>";            
+            checkbox.innerHTML = "<input type='checkbox' name='check' value='" + pubId + "'>";
+            checkbox.className = 'row2';
+            project_title_cell.innerHTML = results[i][0];
+            project_title_cell.className = 'row1';
+            state_cell.innerHTML = results[i][1];
+            state_cell.className = 'row1';
+            department_name_cell.innerHTML = results[i][3];
+            department_name_cell.className = 'row1';
+            category_cell.innerHTML = results[i][2];
+            category_cell.className = 'row1';
+    }
+}
+
+function changePageNo() {
+
+	console.log(p);
+	$('.pagination').empty();
+    $('.pagination').append("<li><a onclick='if(p>0) p-=1; changePageNo()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
+    for(var i=p; i<p+plen; i++) {
+    	$('.pagination').append("<li><a id='pg" + i + "' onclick='changePage(" + i + ")'>" + (i+1) + "</a></li>");
+    }
+    $('.pagination').append("<li><a onclick='if(p<pages-5) p+=1; changePageNo()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
+}
+
 Autocomplete.prototype.show_results = function(data) {
-        var results = data.results || [];
+        results = data.results || [];
+        pages = results.length/psize;
+        /*$('.pagination').empty();
+        $('.pagination').append("<li><a onclick='changePageNo(0, p)' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
+        for(var i=0; i<plen; i++) {
+        	$('.pagination').append("<li><a id='pg" + i + "' onclick='changePage(" + i + ")'>" + (i+1) + "</a></li>");
+        }
+        $('.pagination').append("<li><a onclick='changePageNo(1, p)' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
         var table = document.getElementById('example').getElementsByTagName('tbody')[0];// > tbody")
-        $('#example tbody tr').remove()
-        for(i=0; i<results.length; i++) {
+        $('#example tbody tr').remove();*/
+        changePageNo(2);
+        changePage(0);
+
+/*        for(i=0; i<results.length; i++) {
                 var pubId = results[i][4];
                 var row = table.insertRow(table.rows.length);
                 row.id = pubId;
@@ -161,9 +224,6 @@ Autocomplete.prototype.show_results = function(data) {
                 var state_cell = row.insertCell(2);
                 var department_name_cell = row.insertCell(3);
                 var category_cell = row.insertCell(4);
-                var pdf_cell = row.insertCell(5);
-		console.log(pubId);
-                pdf_cell.innerHTML = "<a href='/sigegov/pdfopen/"+  pubId + "'>File</a>";
                 
                 checkbox.innerHTML = "<input type='checkbox' name='check' value='" + pubId + "'>";
                 checkbox.className = 'row2';
@@ -176,7 +236,7 @@ Autocomplete.prototype.show_results = function(data) {
                 category_cell.innerHTML = results[i][2];
                 category_cell.className = 'row1';
         }
-}
+*/}
 
 
 $(document).ready(function() {
