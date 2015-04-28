@@ -68,7 +68,7 @@ def autocomplete(request):
 	})
 	return HttpResponse(the_data, content_type='application/json')
 
-def publications(request,stateID):
+def publications(request, stateID=None):
 	if stateID:
 		form = PublicationsSearchForm(stateID)
 	else:
