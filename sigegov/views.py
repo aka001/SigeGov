@@ -15,7 +15,6 @@ from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
 from django.shortcuts import redirect
 from django.db.models import Q
-from filetransfers.api import serve_file
 import csv
 import logging
 

@@ -28,7 +28,7 @@
 	background-color:#292c2f;
 	box-shadow:0 1px 1px #ccc;
 	padding: 15px 40px;
-	height: 80px;
+	height: 60px;
 	color: #ffffff;
 	position: fixed;
     top: 0;
@@ -88,7 +88,7 @@
 	box-shadow: 1px 3px 3px 0 rgba(0, 0, 0, 0.05);
 	padding: 20px 40px;
 	position: fixed;
-    top: 80px;
+    top: 60px;
     width: 100%;
 }
 
@@ -128,7 +128,7 @@
 /*	Making the header responsive. Remove these styles, if
 	you don't need the header to work on mobile devices. */
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 1200px) {
 
 	.header-two-bars .header-second-bar nav{
 		font-size:14px;
@@ -136,10 +136,15 @@
 
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 1200px) {
 
 	.header-two-bars .header-first-bar{
-		padding:20px 0;
+		padding:10px 10px;
+		height:100px;
+	}
+
+	.med{
+		display:hidden;
 	}
 
 	.header-two-bars .header-first-bar h1 {
@@ -147,7 +152,7 @@
 		margin: -8px 0 2px;
 		text-align: center;
 		font-size: 24px;
-		line-height: 1;
+		line-height: 0;
 	}
 
 	.header-two-bars .header-first-bar nav {
@@ -157,15 +162,17 @@
 	}
 
 	.header-two-bars .header-first-bar nav a.selected {
-		padding: 5px 8px;
+		padding: 0px 8px;
 	}
 
 	.header-two-bars .header-first-bar .logout-button {
 		display: none;
 	}
 
+
 	.header-two-bars .header-second-bar{
-		padding: 20px 0;
+		padding: 20px 10px;
+		top:100px;
 	}
 
 	.header-two-bars .header-second-bar h2{
@@ -174,7 +181,8 @@
 	}
 
 	.header-two-bars .header-second-bar nav{
-		text-align: center;
+		text-align: center;	
+		font-size: 14px;
 	}
 
 	.header-two-bars .header-second-bar nav a{
