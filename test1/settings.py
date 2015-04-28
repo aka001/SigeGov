@@ -68,7 +68,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'eGov',
 	'USER': 'root',
-	'PASSWORD': 'iiit123',
+	'PASSWORD': 'sql5090',
 	'HOST': 'localhost',
 	'PORT': '8000',
     }
