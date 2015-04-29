@@ -16,18 +16,19 @@
 </style>
 
 </head>
-<h2>Welcome to Administrator Page</h2>
 {% load i18n %}
 {% ifequal flag 1 %}
-<a data-step="3" data-intro="Use this button to create a new event" href='/sigegov/create_event/'>Create Event</a>
+<h2>Welcome to Administrator Page</h2>
+<a data-step="3" class="btn btn-info btn-lg" data-intro="Use this button to create a new event" href='/sigegov/create_event/'>Create Event</a>
 
 <h3>Pending Users</h3>
-<table class="table">
+<table class="table table-striped">
 <tr>
 {% for user in pending_user_list %}
 
 <td>	
-	 <a data-step="4" data-intro="Use this button to change the status of a particular user to accepted" href="/sigegov/user_details/{{user.id}}">{{user}}</a> <a href="/sigegov/authorize_user/{{user.id}}">Change it's status</a> 
+<span style="font-size:20px">{{user}}</span>  &nbsp; &nbsp;</td>
+<td><a data-step="4" class="btn btn-primary" data-intro="Use this button to change the status of a particular user to accepted" href="/sigegov/user_details/{{user.id}}">View Profile</a>&nbsp;</td><td> <a class="btn btn-success" href="/sigegov/authorize_user/{{user.id}}"> Confirm Pending<span class="glyphicon glyphicon-ok"></span></a> 
 </td>
 {% endfor %}
 </td>
@@ -35,17 +36,18 @@
 
 
 <h3>Accepted Users</h3>
-<table class="table">
+<table class="table table-striped">
 <tr>
 {% for user in accepted_user_list %}
 <tr>
 <td>	
-	 <a data-step="5" data-intro="This section shows all the accepted users in the database" href="/sigegov/user_details/{{user.id}}">{{user}}</a>
+<span style="font-size:20px">{{user}}</span>  &nbsp; &nbsp;</td><td>
+	 <a data-step="5" data-intro="This section shows all the accepted users in the database" class="btn btn-primary"  href="/sigegov/user_details/{{user.id}}">View Profile</a>
 </td></tr>
 {% endfor %}
 </td>
 </table>
-
+{% endifequal %}
 
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
@@ -120,19 +122,6 @@ e-Governance has the capacity to take our country to the next generation and CSI
 </div>
 
 <!-- EXTRA	
-<h2>Accepted Users</h2>
-{% for user in accepted_user_list %}
-	 <a href="/sigegov/user_details/{{user.id}}">{{user}}</a> <br/>
-{% endfor %}
-
-{% endifequal %}
 -->
-{% ifequal flag 2 %}
-	<h3>You are not authorized to view this page</h3>
-{% endifequal %}
-
-{% ifequal flag 3 %}
-	<h3> Yo !! </h3>
-{% endifequal %}
 
 {% endblock %}
