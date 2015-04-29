@@ -20,42 +20,45 @@ import logging
 current_path="/sigegov/home"
 emailil="sigegov.gov@gmail.com"
 #emailil="akash.wanted@gmail.com"
-@login_required
+
 def home(request):
     	current_path=request.get_full_path()
-	username = request.user.username
-	is_superuser=request.user.is_superuser
-	flag=0
-	context={'flag': flag}
-	if(is_superuser):
-		flag=1
+        flag=0
+        context={'flag': flag}
+        if not request.user.is_anonymous:
+            username = request.user.username
+            is_superuser=request.user.is_superuser
+            if(is_superuser):
+                flag=1
 		pending_user_list1=UserProfile.objects.filter(status=0)
 		accepted_user_list1=UserProfile.objects.filter(status=1)
 		pending_user_list=[]
 		accepted_user_list=[]
 		for user in pending_user_list1:
-			if(user.user.username=='admin'):
-				continue
-			calc=user.user_id
-			userit=User.objects.get(id=calc)
-			pending_user_list.append(userit)
+                    if(user.user.username=='admin'):
+                        continue
+                    calc=user.user_id
+                    userit=User.objects.get(id=calc)
+                    pending_user_list.append(userit)
 		for user in accepted_user_list1:
-			if(user.user.username=='admin'):
-				continue
-			calc=user.user_id
-			userit=User.objects.get(id=calc)
-			accepted_user_list.append(userit)
-		context = {'pending_user_list': pending_user_list, 'accepted_user_list': accepted_user_list, 'flag': flag}
-	else:
-		user=UserProfile.objects.get(user_id=request.user.id)
+                    if(user.user.username=='admin'):
+                        continue
+                    calc=user.user_id
+                    userit=User.objects.get(id=calc)
+                    accepted_user_list.append(userit)
+            	context = {'pending_user_list': pending_user_list, 'accepted_user_list': accepted_user_list, 'flag': flag}
+            else:
+                user=UserProfile.objects.get(user_id=request.user.id)
 		if(user.status==0):
-			flag=2
+		    	flag=2
 			return redirect('not_authorized')
 		else:
 			flag=3
 		context={'flag': flag, 'current_path': current_path}
 	return render(request, 'sigegov/index.html',context);
 def autocomplete(request):
+        if not request.user:
+		return redirect('not_authorized')
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
 		flag=2
@@ -110,6 +113,7 @@ def autocomplete(request):
 	})
 	return HttpResponse(the_data, content_type='application/json')
 
+@login_required
 def publications(request,stateID=None):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -121,6 +125,7 @@ def publications(request,stateID=None):
 	context = {'publications':publications,'state':stateID, 'current_path': current_path}
 	return render(request,'sigegov/publications.html',context)
 
+@login_required
 def members(request):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -136,6 +141,7 @@ def members(request):
 	context = {'members':accepted_user_list, 'current_path': current_path}
 	return render(request,'sigegov/members.html',context)
 
+@login_required
 def objectives(request):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -144,6 +150,7 @@ def objectives(request):
 	context = {'i': 1, 'current_path': current_path}
 	return render(request, 'sigegov/objectives.html', context)
 
+@login_required
 def executive_committee(request):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -152,6 +159,7 @@ def executive_committee(request):
 	context = {'i': 1, 'current_path': current_path}
 	return render(request, 'sigegov/executive_committee.html', context)
 
+@login_required
 def create_event(request):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -196,7 +204,7 @@ def download(request, file_name=None):
 	response['Content-Disposition'] = 'filename=some_file.pdf'
 	return response
     pdf.closed
-
+@login_required
 def show_event(request):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -207,6 +215,7 @@ def show_event(request):
 	context = {'events': events, 'current_path': current_path}
 	return render(request, 'sigegov/show_events.html',context)
 
+@login_required
 def view_publication(request, pubID):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -226,6 +235,7 @@ def view_publication(request, pubID):
 	context = {'pub': pub, 'flag': flag, 'count': count, 'current_path': current_path, 'pubID': pubID}
 	return render(request, 'sigegov/view_publication.html',context)
 
+@login_required
 def compare_publications(request, pubId_list):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -267,6 +277,7 @@ def view_request(request,requestID):
 	context={'requestit':request_list}
 	return render(request,'blood/view_request.html',context)
 
+@login_required
 def view_statewise(request):
 	user=UserProfile.objects.get(user_id=request.user.id)
 	if(user.status==0):
@@ -274,6 +285,7 @@ def view_statewise(request):
 	context = {}
 	return render(request,'sigegov/view_statewise.html',context)
 
+@login_required
 def enter_data(request):
 	"""Used for entering the data into the Publications database."""
 	with open("text.csv", 'rU') as csvfile:
