@@ -182,7 +182,7 @@ textarea:focus {
 			<h1 ><a href="#"><img style="height:50px;width:150px;" src="/static/img/logogov.jpg"  alt="..."></a></h1>
 			
 			<span id="google_translate_element"></span>
-			<h1><a href="#">SigEGov</a></h1>
+			<h1><a href="/sigegov/home/">SigEGov</a></h1>
 
 			<nav>
 				
@@ -195,8 +195,12 @@ textarea:focus {
 				<a href="http://www.csinihilent-egovernanceawards.org/" target=blank>Awards</a>
 				<a href="/sigegov/show_event/">Events</a>
 			</nav>
-
-			<a href="#" class="logout-button">Hi {{ user }} | Logout <span class="glyphicon glyphicon-off" ></span></a>
+			{% if user %}
+				{% if user.is_anonymous %}
+					<a href="/accounts/login/" class="logout-button">Hi {{ user }} | Login <span class="glyphicon glyphicon-off" ></span></a>
+				{% else %}
+					<a href="/accounts/logout/" class="logout-button">Hi {{ user }} | Logout <span class="glyphicon glyphicon-off" ></span></a>																		{% endif %}
+			{% endif %}
 		</div>
 		<br/>
 		<br/>
