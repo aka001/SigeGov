@@ -100,15 +100,16 @@ Autocomplete.prototype.setup = function() {
                 this.form_elem = $(this.form_selector)
                 this.query_box = this.form_elem.find('input[class=que]')
                 // Watch the input box.
-                var query = self.query_box.val()
+                //var query = self.query_box.val()
                 this.query_box.on('keyup change focus', function() {
+                var query = self.query_box.val()
                                           
                   //if(query.length!=0 && query.length < self.minimum_length) {
                         //      return false
                   //}
                   self.fetch(query)
                 })
-                self.fetch(query)
+		//self.fetch(query)
 
         // On selecting a result, populate the search field.
         this.form_elem.on('click', '.ac-result', function(ev) {
@@ -163,7 +164,7 @@ function changePage(pno) {
     var table = document.getElementById('example').getElementsByTagName('tbody')[0];// > tbody")
     $('#example tbody tr').remove()
 
-    for(i=psize*pno; i<psize*(pno+1); i++) {
+    for(i=psize*pno;i<results.length && i<psize*(pno+1); i++) {
             var pubId = results[i][4];
             var row = table.insertRow(table.rows.length);
             row.id = pubId;
