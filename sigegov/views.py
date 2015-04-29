@@ -20,21 +20,60 @@ import logging
 current_path="/sigegov/home"
 emailil="sigegov.gov@gmail.com"
 #emailil="akash.wanted@gmail.com"
+def home(request):
+    	current_path=request.get_full_path()
+        flag=0
+        context={}
+        username = request.user.username
+        is_superuser=request.user.is_superuser
+        print is_superuser
+        if(is_superuser):
+                    print "enter admind area"
+	            flag=1
+	            pending_user_list1=UserProfile.objects.filter(status=0)
+		    accepted_user_list1=UserProfile.objects.filter(status=1)
+		    pending_user_list=[]
+		    accepted_user_list=[]
+		    for user in pending_user_list1:
+		            if(user.user.username=='admin'):
+		                    continue
+		            calc=user.user_id
+		            userit=User.objects.get(id=calc)
+		            pending_user_list.append(userit)
+		    for user in accepted_user_list1:
+		            if(user.user.username=='admin'):
+		                    continue
+		            calc=user.user_id
+		            userit=User.objects.get(id=calc)
+		            accepted_user_list.append(userit)
+		    context = {'pending_user_list': pending_user_list, 'accepted_user_list': accepted_user_list, 'flag': flag}
+	elif request.user.is_authenticated():#if someone logged in
+                user=UserProfile.objects.get(user_id=request.user.id)
+		if(user.status==0):
+		        flag=2
+			return redirect('not_authorized')
+		else:
+			flag=3
+			context={'flag': flag, 'current_path': current_path}
+        else:
+                flag = 199
+                context={'flag': flag}
+	return render(request, 'sigegov/index.html',context);
+'''
 
 def home(request):
     	current_path=request.get_full_path()
         flag=0
         context={'flag': flag}
-        if not request.user.is_anonymous:
-            username = request.user.username
-            is_superuser=request.user.is_superuser
-            if(is_superuser):
-                flag=1
-		pending_user_list1=UserProfile.objects.filter(status=0)
-		accepted_user_list1=UserProfile.objects.filter(status=1)
-		pending_user_list=[]
-		accepted_user_list=[]
-		for user in pending_user_list1:
+        username = request.user.username
+        is_superuser=request.user.is_superuser
+        if(is_superuser):
+            flag=1
+	    pending_user_list1=UserProfile.objects.filter(status=0)
+	    accepted_user_list1=UserProfile.objects.filter(status=1)
+	    pending_user_list=[]
+	    accepted_user_list=[]
+	    for user in pending_user_list1:
                     if(user.user.username=='admin'):
                         continue
                     calc=user.user_id
@@ -56,6 +95,7 @@ def home(request):
 			flag=3
 		context={'flag': flag, 'current_path': current_path}
 	return render(request, 'sigegov/index.html',context);
+'''
 def autocomplete(request):
         if not request.user:
 		return redirect('not_authorized')
