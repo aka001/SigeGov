@@ -56,6 +56,10 @@ def home(request):
 		context={'flag': flag, 'current_path': current_path}
 	return render(request, 'sigegov/index.html',context);
 def autocomplete(request):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		flag=2
+		return redirect('not_authorized')
     	current_path=request.get_full_path()
 	search_text = request.GET.get('search_text')
 	project_title = request.GET.get('project_title')
@@ -107,6 +111,10 @@ def autocomplete(request):
 	return HttpResponse(the_data, content_type='application/json')
 
 def publications(request,stateID=None):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		flag=2
+		return redirect('not_authorized')
     	current_path=request.get_full_path()
 	form = PublicationsSearchForm(request.GET)
 	publications = form.search()
@@ -114,6 +122,10 @@ def publications(request,stateID=None):
 	return render(request,'sigegov/publications.html',context)
 
 def members(request):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		flag=2
+		return redirect('not_authorized')
     	current_path=request.get_full_path()
 	members = UserProfile.objects.filter(status=1)
 	accepted_user_list=[]
@@ -125,16 +137,25 @@ def members(request):
 	return render(request,'sigegov/members.html',context)
 
 def objectives(request):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
     	current_path=request.get_full_path()
 	context = {'i': 1, 'current_path': current_path}
 	return render(request, 'sigegov/objectives.html', context)
 
 def executive_committee(request):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
     	current_path=request.get_full_path()
 	context = {'i': 1, 'current_path': current_path}
 	return render(request, 'sigegov/executive_committee.html', context)
 
 def create_event(request):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
     	current_path=request.get_full_path()
 	if request.method=='POST':
 		form=UploadEventForm(request.POST, request.FILES)
@@ -177,6 +198,9 @@ def download(request, file_name=None):
     pdf.closed
 
 def show_event(request):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
 	current_path=request.get_full_path()
 	print current_path
 	events = Event.objects.all()
@@ -184,6 +208,9 @@ def show_event(request):
 	return render(request, 'sigegov/show_events.html',context)
 
 def view_publication(request, pubID):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
 	current_path=request.get_full_path()
 	uID = request.user.id
 	pub = Publications.objects.get(id=pubID)
@@ -200,6 +227,9 @@ def view_publication(request, pubID):
 	return render(request, 'sigegov/view_publication.html',context)
 
 def compare_publications(request, pubId_list):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
 	current_path=request.get_full_path()
         pubsIds = pubId_list.split(',')
         logging.error(pubsIds)
@@ -230,11 +260,17 @@ def process_downvote(request, pubID):
 
 @login_required
 def view_request(request,requestID):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
 	request_list=Recepient.objects.get(id=requestID)
 	context={'requestit':request_list}
 	return render(request,'blood/view_request.html',context)
 
 def view_statewise(request):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
 	context = {}
 	return render(request,'sigegov/view_statewise.html',context)
 
@@ -302,6 +338,9 @@ def enter_data(request):
 
 @login_required
 def view_request_thanks(request,requestID):
+	user=UserProfile.objects.get(user_id=request.user.id)
+	if(user.status==0):
+		return redirect('not_authorized')
 	request_list=Recepient.objects.get(id=requestID)
 	val=str(request.user)
 	val1=str(request.user.email)
