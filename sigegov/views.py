@@ -409,7 +409,13 @@ def not_authorized(request):
 def authorize_user(request, userID):
 	user=UserProfile.objects.get(user_id=userID)
 	user.status=1
+	body="Hi,\n\nYour membership request has been approved by admin. You can now login into the system.\n\nRegards,\nSigeGov Team"
+	subject="Regarding Membership Request at Sigegov"
+	mailit=[]
+	mailit.append(user.user.email)
 	user.save()
+	send_mail(subject, body, emailil,mailit)
+
 	return redirect('home')
 @login_required
 def user_details(request, userID):
