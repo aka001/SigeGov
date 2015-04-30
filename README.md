@@ -52,7 +52,7 @@ cd example/
 java -jar start.jar 
 [It will start the solr server, move to another terminal window]
 
-Setup indexes for solr search:
+Setup indexes for solr search
 1.Create a schema.xml from django haystack indexes so that solr can return the query output
 	python manage.py build_solr_schema > schema.xml
 2.  cp schema.xml to solr [Assuming solr is present in the home directory]
@@ -73,4 +73,3 @@ Two servers should always run in the backend one for django and other for solr.
 
 Home page: 127.0.0.1:8000/sigegov
 Django admin page: 127.0.0.1:8000/admin
-
