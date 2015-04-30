@@ -53,7 +53,7 @@ java -jar start.jar
 [It will start the solr server, move to another terminal window]
 
 Setup indexes for solr search
-1.Create a schema.xml from django haystack indexes so that solr can return the query output
+1. Create a schema.xml from django haystack indexes so that solr can return the query output
 	python manage.py build_solr_schema > schema.xml
 2.  cp schema.xml to solr [Assuming solr is present in the home directory]
 	cp schema.xml ~/solr-4.10.2/example/solr/collection1/conf/schema.xml
